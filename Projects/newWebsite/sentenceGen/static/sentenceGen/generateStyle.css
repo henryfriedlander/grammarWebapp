@@ -1,0 +1,15 @@
+#button {
+    margin-top: 10px;
+    background-color: #003399;
+    display: inline-block;
+    width:24%;
+    border-radius:3px;
+}
+
+p {
+    text-align: center;
+}
+
+a {
+    color: white;
+}

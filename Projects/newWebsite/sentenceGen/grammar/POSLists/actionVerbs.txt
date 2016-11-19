@@ -1,0 +1,10 @@
+move
+jump
+send
+kick
+affect
+compute
+kill
+spend
+delay
+look

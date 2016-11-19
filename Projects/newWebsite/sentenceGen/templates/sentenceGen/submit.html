@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/submitStyle.css' %}" />
+        <title>Results</title>
+    </head>
+
+    <body>
+        <p>Hello World, Results!</p>
+        <div>
+          <table style = "width:100%" border = "1">
+          <tr>
+            <th>Question Number</th>
+            <th>Question Sentence</th>
+            <th>Correct Values</th>
+            <th>Chosen Values</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>{{ q0.sentence }}</td>
+            <td>{{ q0.correct_words }}</td>
+            <td>{{ q0.chosen_words }}</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>{{ q1.sentence }}</td>
+            <td>{{ q1.correct_words }}</td>
+            <td>{{ q1.chosen_words }}</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>{{ q2.sentence }}</td>
+            <td>{{ q2.correct_words }}</td>
+            <td>{{ q2.chosen_words }}</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>{{ q3.sentence }}</td>
+            <td>{{ q3.correct_words }}</td>
+            <td>{{ q3.chosen_words }}</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>{{ q4.sentence }}</td>
+            <td>{{ q4.correct_words }}</td>
+            <td>{{ q4.chosen_words }}</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>{{ q5.sentence }}</td>
+            <td>{{ q5.correct_words }}</td>
+            <td>{{ q5.chosen_words }}</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>{{ q6.sentence }}</td>
+            <td>{{ q6.correct_words }}</td>
+            <td>{{ q6.chosen_words }}</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>{{ q7.sentence }}</td>
+            <td>{{ q7.correct_words }}</td>
+            <td>{{ q7.chosen_words }}</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>{{ q8.sentence }}</td>
+            <td>{{ q8.correct_words }}</td>
+            <td>{{ q8.chosen_words }}</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>{{ q9.sentence }}</td>
+            <td>{{ q9.correct_words }}</td>
+            <td>{{ q9.chosen_words }}</td>
+          </tr>
+          </table>
+        </div>
+        
+        <div id="button">
+            <p> <a href = "/sentence/">Home</a></p>
+        </div>
+    </body>
+</html>

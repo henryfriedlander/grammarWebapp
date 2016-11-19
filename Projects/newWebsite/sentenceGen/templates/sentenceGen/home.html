@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/homeStyle.css' %}" />
+        <title>Home</title>
+    </head>
+
+    <body>
+        <div id="header">
+            <p><h1>Sentence Generator</h1></p>
+
+        <div id="subtitle">
+            <p><h3> by Henry Friedlander</h3></p>
+        </div>
+
+        <div id="button">
+            <p> <a href = "/sentence/generate">Generate a Sentence!</a></p>
+        </div>
+
+        <div id="button">
+            <p> <a href = "/sentence/quiz">Quiz Mode</a></p>
+        </div>
+
+        <div id="button">
+            <p> <a href = "/sentence/about">About</a></p>
+        </div>
+
+        <div id="button">
+            <p> <a href = "/sentence/teacher">Teacher Login</a></p>
+        </div>
+
+    </body>
+</html>

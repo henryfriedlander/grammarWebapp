@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/scoresStyle.css' %}" />
+        <title>Teacher</title>
+    </head>
+
+    <body>
+        <p>Hello {{ teacher.code }}!</p>
+        <div>
+            <table style = "width:100%" border = "1">
+            <tr>
+                <th> Student Name </th>
+                <th> Quiz Mode </th>
+                <th> Quiz Score </th>
+            </tr>
+            {% for quiz in quizzes %}
+            <tr>
+                <td> {{ quiz.name }} </td>
+                <td> {{ quiz.mode }} </td>
+                <td> {{ quiz.score }} </td>
+            </tr>
+            {% endfor %}
+            </table>
+        </div>
+        <div id="button">
+            <p> <a href = "/sentence/">Home</a></p>
+        </div>
+    </body>
+</html>

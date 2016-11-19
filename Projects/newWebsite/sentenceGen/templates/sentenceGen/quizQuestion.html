@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/quizStyle.css' %}" />
+        <title>Quiz</title>
+    </head>
+
+    <body>
+        <p>QUIZ</p>
+        <h4 id="sentence"> {{ sentence }} </h4>
+        <p> Choose all the {{ mode }}s </p>
+        <p> {{ quiz.teacher }} </p>
+        <form action="/sentence/submit/{{ quiz.pk }}/{{ question.pk }}/" method="post">
+        {% csrf_token %}
+        {% for word in question.word_set.all %}
+            <input type="checkbox" name="word{{ forloop.counter}}" id="word{{ forloop.counter }}" value = "{{ word.id }}" />
+            <label for="word{{ forloop.counter }}"> {{ word.word }} </label><br />
+        {% endfor %}
+        <input type="submit" value="Next" />
+        </form>
+    </body>
+</html>
