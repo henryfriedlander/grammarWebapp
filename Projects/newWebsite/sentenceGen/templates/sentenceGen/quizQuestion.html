@@ -1,13 +1,11 @@
-{% load static %}
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/quizStyle.css' %}" />
-        <title>Quiz</title>
-    </head>
-
-    <body>
+{% block stylesheets %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/quizStyle.css' %}" />
+{% endblock stylesheets %}
+{% block main %}
         <p>QUIZ</p>
         <h4 id="sentence"> {{ sentence }} </h4>
         <p> Choose all the {{ mode }}s </p>
@@ -20,5 +18,4 @@
         {% endfor %}
         <input type="submit" value="Next" />
         </form>
-    </body>
-</html>
+{% endblock main %}
