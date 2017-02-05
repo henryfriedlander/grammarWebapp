@@ -1,52 +1,27 @@
 
-
-body {
-    font-family: "Arial";
-}
-
 h1 {
-    color: #ffffcc;
+  font-size: 80px;
+    color: #ffffff;
     padding-top: 10px;
-    padding-left: 8px;
     display: inline;
 }
 
 h3 {
-    color: #b3b3cc;
-    margin-right: 8px;
+    color: #ffffff;
     padding-top: 12px;
     display: inline;
-    text-align: right;
 }
 
-div {
-    height: 50px;
-    width: 100%;
-    display:block;
-    margin: auto;
-}
-
-#header {
-    background-color: #0066cc;
-}
-
-#subtitle {
-    height:20px;
-    text-align: right;
-}
-
-#button {
-    margin-top: 10px;
-    background-color: #003399;
-    display: inline-block;
-    width:24%;
-    border-radius:3px;
-}
 
 p {
     text-align: center;
 }
 
-a {
-    color: white;
+#front-page-img { 
+  background: url(https://static.pexels.com/photos/2318/vintage-technology-keyboard-old.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+height: 100vh;
 }
