@@ -1,13 +1,10 @@
-{% load static %}
+{% extends "base.html" %}
+{% block title %}Teacher{% endblock %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/scoresStyle.css' %}" />
-        <title>Teacher</title>
-    </head>
-
-    <body>
+{% block stylesheets %}
+    {% load staticfiles %}
+{% endblock stylesheets %}
+{% block main %}
         <p>Hello {{ teacher.code }}!</p>
         <div>
             <table style = "width:100%" border = "1">
@@ -25,8 +22,4 @@
             {% endfor %}
             </table>
         </div>
-        <div id="button">
-            <p> <a href = "/sentence/">Home</a></p>
-        </div>
-    </body>
-</html>
+{% endblock main %}

@@ -1,21 +1,15 @@
-{% load static %}
+{% extends "base.html" %}
+{% block title %}Sentence{% endblock %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/generateStyle.css' %}" />
-        <title>Sentence</title>
-    </head>
-
-    <body>
+{% block stylesheets %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/generateStyle.css' %}" />  
+{% endblock stylesheets %}
+{% block main %}
         <div>
             <p> {{ sentence }} </p>
         </div>
         <div id="button">
             <p> <a href = "/sentence/generate">Generate a Sentence!</a></p>
         </div>
-        <div id="button">
-            <p> <a href = "/sentence/">Home</a></p>
-        </div>
-    </body>
-</html>
+{% endblock main %}

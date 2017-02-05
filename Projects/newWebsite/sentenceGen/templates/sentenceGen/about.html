@@ -1,22 +1,19 @@
-{% load static %}
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/aboutStyle.css' %}" />
-        <title>About</title>
-    </head>
-
-    <body>
+{% block stylesheets %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/aboutStyle.css' %}" />
+{% endblock stylesheets %}
+{% block main %}
         <p>HOW TO USE:</p>
-		<p>1. In Generate Sentence Mode, the user can press a button and a gramatically correct sentence is generated and displayed! </p>
+        <p>1. In Generate Sentence Mode, the user can press a button and a gramatically correct sentence is generated and displayed! </p>
 
-		<p>2. In Quiz Mode, a user can login, and chooses a "MODE". Then, they proceed to take a quiz collected of 10 questions. For each question, a sentence is randomly generated, and the user needs to click on each word that corresponds to the part of speech chosen as the "MODE". At the end of the quiz, the student can view their results, including the correct answers for each question. The results of this quiz are saved, and the teacher can view the grades of each student. </p>
+        <p>2. In Quiz Mode, a user can login, and chooses a "MODE". Then, they proceed to take a quiz collected of 10 questions. For each question, a sentence is randomly generated, and the user needs to click on each word that corresponds to the part of speech chosen as the "MODE". At the end of the quiz, the student can view their results, including the correct answers for each question. The results of this quiz are saved, and the teacher can view the grades of each student. </p>
 
-		<p>3. For "Teacher Login", the teacher with pass in their unique username and password, then be redirected to a page that contains the tabulated results for each student that took a quiz with their corresponding Teacher Code.</p>
+        <p>3. For "Teacher Login", the teacher with pass in their unique username and password, then be redirected to a page that contains the tabulated results for each student that took a quiz with their corresponding Teacher Code.</p>
 
 
-		<p>HOW IT WORKS: </p>
-		<p>This project was written in Python, and the webapp is powered through Django, HTML, and CSS. This project also uses an SQLite database, managed through Python and Django, to store information on quizzes and users. To generate sentences randomly, this program will select a general sentence structure. Then, it fills the sentence structure with individual words (such as selecting "cat" for the "noun" position in the sentence), selected at random from a database. Then, the program modifies the words as necessary to ensure that there is proper agreement in plurality, etc. </p>
-    </body>
-</html>
+        <p>HOW IT WORKS: </p>
+        <p>This project was written in Python, and the webapp is powered through Django, HTML, and CSS. This project also uses an SQLite database, managed through Python and Django, to store information on quizzes and users. To generate sentences randomly, this program will select a general sentence structure. Then, it fills the sentence structure with individual words (such as selecting "cat" for the "noun" position in the sentence), selected at random from a database. Then, the program modifies the words as necessary to ensure that there is proper agreement in plurality, etc. </p>
+{% endblock main %}

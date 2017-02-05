@@ -1,13 +1,12 @@
-{% load static %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/submitStyle.css' %}" />
-        <title>Results</title>
-    </head>
+{% extends "base.html" %}
+{% block title %}Results{% endblock %}
 
-    <body>
+{% block stylesheets %}
+    {% load staticfiles %}
+{% endblock stylesheets %}
+{% block main %}
+
         <p>Hello World, Results!</p>
         <div>
           <table style = "width:100%" border = "1">
@@ -79,9 +78,4 @@
           </tr>
           </table>
         </div>
-        
-        <div id="button">
-            <p> <a href = "/sentence/">Home</a></p>
-        </div>
-    </body>
-</html>
+{% endblock main %}
