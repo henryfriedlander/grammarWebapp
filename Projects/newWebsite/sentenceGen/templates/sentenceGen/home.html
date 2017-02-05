@@ -4,28 +4,22 @@
 
 {% block stylesheets %}
     {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/homeStyle.css' %}" />  
 {% endblock stylesheets %}
+
 {% block main %}
+
+<div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8 centered-text">
         <div id="header">
             <p><h1>Sentence Generator</h1></p>
 
         <div id="subtitle">
             <p><h3> by Henry Friedlander</h3></p>
         </div>
-
-        <div id="button">
-            <p> <a href = "/sentence/generate">Generate a Sentence!</a></p>
+            </div>
         </div>
-
-        <div id="button">
-            <p> <a href = "/sentence/quiz">Quiz Mode</a></p>
-        </div>
-
-        <div id="button">
-            <p> <a href = "/sentence/about">About</a></p>
-        </div>
-
-        <div id="button">
-            <p> <a href = "/sentence/teacher">Teacher Login</a></p>
-        </div>
+    </div>  
+</div>  
 {% endblock main %}

@@ -82,6 +82,10 @@
     padding-top: 100px;
 }
 
+.bottom-super-padded{
+    padding-bottom: 50px;
+}
+
 .file-file pre {
     padding: 0px;
     margin: 0px;
