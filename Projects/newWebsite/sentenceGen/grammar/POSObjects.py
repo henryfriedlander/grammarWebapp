@@ -1,3 +1,6 @@
+# reword the sentences so that the answers to the questions are the word
+
+
 class Word(object): #this object represents a word in a sentence
     def __init__(self, w, pos, funct = None):
         self.word = w #this is the actual word this part of speech represents

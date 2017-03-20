@@ -3,16 +3,14 @@ from django.http import HttpResponse
 import random
 from . import forms
 from models import Quiz, Question, Word, Teacher
-# Create your views here.
 
-# import henrysCode
 from grammar import getSentence
 
 def home(request):
     return render(request, 'sentenceGen/home.html')
 
 def newsentence():
-    return getSentence.getSentence()#random.choice([["django", "programming", "fun", "woo"], ["becca", "woot", "yay"], ["programming", "computer"]])
+    return getSentence.getSentence()
 
 def joinSentence(sentence):
     realSentence = getSentence.getStrSent(sentence)
@@ -36,27 +34,71 @@ def makeWord(word, question, index):
     w.save()
     return w.pk
 
-def makeQuestion(sentence):
+def makeQuestion(sentence, mode, questionType):
+    # an idntify question is one where the question
+    # asks the user to click on all the words of a particular POS
+    # find all POS that match the mode
+    # return None if there are no POS of the mode type in the sentence
+    # populate correct_words field inside the Question model inside this function
     q = Question(sentence = joinSentence(sentence), wordPKs = "")
     q.save()
 
+    updatePKs(getPKs(sentence, mode, q), q)
+
+    modeWords = getModeWords(sentence, mode)
+
+    if modeWords == []:
+        return None
+
+    updateQuestionAnswer(modeWords, q, questionType)
+
+    q.save()
+
+    return q.pk
+
+def updateQuestionAnswer(modeWords, q, questionType):
+    i = random.randrange(0,len(modeWords))
+    question = getQuestion(modeWords[i],questionType)
+
+    question = getQuestion(modeWords[i], questionType)
+    i = random.randrange(0,len(question))
+    text = question.keys()[i]
+    q.chosen_words = question.get(text)
+    q.text = text
+
+def updatePKs(wordPKs, q):
+    wordPKs = wordPKs[:-1]
+    print(wordPKs)
+    q.wordPKs = wordPKs
+
+def getPKs(sentence, mode, q):
     index = 0
     wordPKs = ""
-
     for word in sentence:
         if getPartOfSpeech(word) != "punctuation":
             current_pk = makeWord(word, q, index)
             index += 1
             wordPKs = wordPKs + str(current_pk) + ","
+    return wordPKs
 
-    wordPKs = wordPKs[:-1]
-    print(wordPKs)
+def getModeWords(sentence, mode):
+    index=0
+    modeWords = []
+    for word in sentence:
+        if getPartOfSpeech(word) == mode:
+            modeWords+=[word]
+        index += 1
+    return modeWords
 
-
-    q.wordPKs = wordPKs
-
-    q.save()
-    return q.pk
+def getQuestion(word, questionType):
+    if questionType == 0:
+        return {"Identify for all the " + str(getPartOfSpeech(word)) + " following sentence": word.getWord()}
+    elif questionType == 1:
+        return word.getQA()
+    elif questionType == 2:
+        return word.getQA()
+    else:
+        return "Bug in getQuestion function"
 
 def generate(request):
     sentence = joinSentence(newsentence())
@@ -91,7 +133,10 @@ def startQuiz(request):
             quiz.save()
 
             sentence = newsentence()
-            question_id = makeQuestion(sentence)
+            question = makeQuestion(sentence, mode, 0)
+            while question == None:
+                question = makeQuestion(sentence, mode, 0)
+            question_id = question
 
 
     return redirect('quiz1', quiz_id = quiz.pk, question_id = question_id)
@@ -159,7 +204,11 @@ def submit(request, quiz_id, question_id):
     if quiz.attempts < 10:
 
         sentence = newsentence()
-        question_id = makeQuestion(sentence)
+        mode = quiz.mode
+        question = makeQuestion(sentence, mode, 0)
+        while question == None:
+            question = makeQuestion(sentence, mode, 0)
+        question_id = question
 
         return redirect('quiz1', quiz_id = quiz.pk, question_id = question_id)
 
@@ -179,6 +228,7 @@ def submit(request, quiz_id, question_id):
         q9 = get_object_or_404(Question, pk = int(old_questions[9]))
 
         return render(request, 'sentenceGen/submit.html', {'quiz':quiz, 'q0':q0, 'q1':q1, 'q2':q2, 'q3':q3, 'q4':q4, 'q5':q5, 'q6':q6, 'q7':q7, 'q8':q8, 'q9':q9})
+
 
 def teacherLogin(request):
     form = forms.TeacherLogin()

@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django.db import models
 
 # Create your models here.
@@ -20,6 +18,8 @@ class Question(models.Model):
     wordPKs = models.CharField(max_length = 200)
     chosen_words = models.CharField(max_length = 200)
     correct_words = models.CharField(max_length = 200)
+    # the question or instruction itself e.g. "identify all nouns"
+    text = models.CharField(max_length = 200)
 
 class Word(models.Model):
     question = models.ForeignKey(Question, on_delete = models.CASCADE)
