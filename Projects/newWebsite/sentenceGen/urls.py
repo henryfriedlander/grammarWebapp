@@ -13,5 +13,7 @@ urlpatterns = [
     url(r'^submit/(?P<quiz_id>\d+)/(?P<question_id>\d+)/', views.submit, name = 'submit'), # check correctness, redirects to next question
     url(r'^teacher/', views.teacherLogin, name = 'teacherLogin'), # takes in username and password
     url(r'^attemptLogon/', views.attemptLogon, name = 'attemptLogon'), # checks username/password combo
-    url(r'^viewScores/(?P<teacher_id>\d+)/', views.viewScores, name = 'viewScores') # teacher can view scores of their students. 
+    url(r'^viewScores/(?P<teacher_id>\d+)/', views.viewScores, name = 'viewScores'), # teacher can view scores of their students. 
+    url(r'^lightningRound/', views.lightningRound, name='lightningRound'),
+    url(r'^scoreQuestion/(?P<question_id>\d+)/(?P<mode>\w+)/', views.scoreQuestion, name='scoreQuestion'),
 ]

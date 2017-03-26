@@ -149,7 +149,7 @@ def startQuiz(request):
             teacher = data['teacher']
 
             mode = int(mode)
-            possible_modes = [(1, 'noun'), (2, 'adverb'), (3, 'adjective')]
+            possible_modes = getPossibleQuestionModes()
             for (i, m) in possible_modes:
                 if i == mode:
                     mode = m
@@ -166,6 +166,9 @@ def startQuiz(request):
 
     return redirect('quiz1', quiz_id = quiz.pk, question_id = question_id)
 
+
+def getPossibleQuestionModes():
+    return [(1, 'noun'), (2, 'adverb'), (3, 'adjective')]
 
 def quizQuestion(request, quiz_id, question_id):
 
@@ -285,3 +288,69 @@ def viewScores(request, teacher_id):
     quizzes = Quiz.objects.filter(teacher__startswith = teacher.code)
 
     return render(request, 'sentenceGen/viewScores.html', {'teacher':teacher, 'quizzes':quizzes})
+
+def lightningRound(request): 
+    sentence = newsentence()
+    question_id = makeQuestion(sentence)
+    question = get_object_or_404(Question, pk = question_id)
+    modes = getPossibleQuestionModes()
+    random_index = random.randrange(0,len(modes))
+    random_tuple = modes[random_index]
+    mode = random_tuple[1]
+
+    #correct_words = getCorrectWordsForQuestion(question, mode)
+
+    return render(request, 'sentenceGen/lightningQuestion.html', {'sentence': question.sentence, 'mode': mode, 'question':question})
+
+#def getChosenWordsFromRequest(request):
+
+def getCorrectWordsForQuestion(question, mode):
+    correct_words = set()
+    words = question.sentence.split()
+
+    for word in question.word_set.all():
+        if doesPOSMatchMode(word, mode):
+            print ("adding to correct words: " + word.word)
+            correct_words.add(word)
+
+    return correct_words
+
+def doesPOSMatchMode(word, mode):
+    return str(word.part_of_speech) == str(mode)
+
+
+
+def scoreQuestion(request, question_id, mode):
+    question = get_object_or_404(Question, pk = question_id)
+    sentence = question.sentence
+    words = sentence.split()
+    correct = True
+
+
+    print ("Correct Words: " + str(getCorrectWordsForQuestion(question, mode)))
+
+    correct_words = ""
+    chosen_words = ""
+
+    for i in range(len(words)):
+        key = "word%d" % (i+1)
+        try:
+            answer = question.word_set.get(pk = request.POST[key])
+            print ("POS: " + answer.part_of_speech)
+            chosen_words = chosen_words + answer.word + ", "
+            if str(answer.part_of_speech) != str(mode):
+                correct = False
+            else:
+                correct_words = correct_words + answer.word + ", "
+
+        except:
+            answer_pk = findAnswer(question, i)
+
+            answer = get_object_or_404(Word, pk = answer_pk)
+            print ("POS: " + answer.part_of_speech)
+            if str(answer.part_of_speech) == str(mode):
+                print(str(mode), str(answer.part_of_speech), str(answer.word))
+                correct_words = correct_words + answer.word + ", "
+                correct = False
+
+    return render(request, 'sentenceGen/lightningAnswer.html', {'sentence': question.sentence, 'mode': mode, 'question':question, 'correct_words': correct_words, 'chosen_words':chosen_words, 'correct':correct})

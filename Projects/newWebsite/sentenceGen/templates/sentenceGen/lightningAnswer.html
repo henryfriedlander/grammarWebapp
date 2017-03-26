@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Lightning Answer{% endblock %}
+
+{% block stylesheets %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/quizStyle.css' %}" />
+{% endblock stylesheets %}
+{% block main %}
+    <h1>Lightning Round</h1>
+        <h4 id="sentence"> {{ sentence }} </h4>
+        <p> Choose all the {{ mode }}s </p>
+    {% if correct == true %} 
+    <h1>Correct! </h1>
+    <h4> You identified the following {{ mode }}s correctly: </h4>
+    <h3>{{correct_words}}</h3>
+    {% else %}
+    <h1>Incorrect</h1>
+    <h4>You did not correctly identify all of the {{ mode }}s: </h4>
+        <h4>Correct {{ mode }}s: </h4>
+        <p> {{correct_words}} </p>
+        <h4>Chosen Words: </h4>
+        <p> {{chosen_words}}</p>
+    {% endif %}
+{% endblock main %}
