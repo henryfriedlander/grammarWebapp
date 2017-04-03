@@ -14,8 +14,13 @@ def newsentence():
 
 def joinSentence(sentence):
     realSentence = getSentence.getStrSent(sentence)
-    print "sentence: ", 
-    print realSentence
+    return realSentence
+
+def joinSentenceRedact(sentence, word):
+    realSentence = getSentence.getStrSent(sentence).split()
+    for i in xrange(realSentence):
+        if realSentence[k]==word:
+            realSentence[k]="_____"
     return realSentence
 
 def getPartOfSpeech(word): # fix
@@ -56,20 +61,40 @@ def makeQuestion(sentence, mode, questionType):
 
     return q.pk
 
+def makeQuestionRedact(sentence, correctWord, possWords):
+    q = Question(sentence = joinSentenceRedact(sentence, correctWord), wordPKs = "")
+    q.save()
+
+    updatePKs(getPKsRedact(possWords, q), q)
+
+    q.text = "Fill in the word which best complete the following sentence"
+    q.correct_words = correctWord
+    q.save()
+
+    return q.pk
+
 def updateQuestionAnswer(modeWords, q, questionType):
     i = random.randrange(0,len(modeWords))
     question = getQuestion(modeWords[i],questionType)
-
-    question = getQuestion(modeWords[i], questionType)
-    i = random.randrange(0,len(question))
-    text = question.keys()[i]
-    q.chosen_words = question.get(text)
+    dictKeys = question.keys()
+    j = random.randrange(0,len(dictKeys))
+    text = dictKeys[j]
+    q.correct_words = question.get(text)
     q.text = text
 
 def updatePKs(wordPKs, q):
     wordPKs = wordPKs[:-1]
-    print(wordPKs)
+    print("pk "+wordPKs)
     q.wordPKs = wordPKs
+
+def getPKsRedact(possWords, q):
+    index = 0
+    wordPKs = ""
+    for word in possWords:
+        current_pk = makeWord(word, q, index)
+        index += 1
+        wordPKs = wordPKs + str(current_pk) + ","
+    return wordPKs
 
 def getPKs(sentence, mode, q):
     index = 0
@@ -150,17 +175,17 @@ def quizQuestion(request, quiz_id, question_id):
     return render(request, 'sentenceGen/quizQuestion.html', {'sentence': question.sentence, 'mode': quiz.mode, 'question':question, 'quiz': quiz})
 
 def findAnswer(question, i):
-    word_pks = question.wordPKs.split(",")
-    for pk in word_pks:
-        word = get_object_or_404(Word, pk = int(pk))
+    #word_pks = question.wordPKs.split(",")
+    for word in question.word_set.all():
+        #word = get_object_or_404(Word, pk = int(pk))
         if word.index == i:
-            return pk
+            return word.pk
 
 def submit(request, quiz_id, question_id):
     quiz = get_object_or_404(Quiz, pk = quiz_id)
     question = get_object_or_404(Question, pk = question_id)
     sentence = question.sentence
-    words = sentence.split()
+    words = question.word_set.all()
     correct = True
 
     correct_words = ""
@@ -169,8 +194,9 @@ def submit(request, quiz_id, question_id):
     for i in range(len(words)):
         key = "word%d" % (i+1)
         try:
+            print "try"
             answer = question.word_set.get(pk = request.POST[key])
-            print ("POS: " + answer.part_of_speech)
+            #print ("POS: " + answer.part_of_speech)
             chosen_words = chosen_words + answer.word + ", "
             if str(answer.part_of_speech) != str(quiz.mode):
                 correct = False
@@ -179,11 +205,12 @@ def submit(request, quiz_id, question_id):
 
         except:
             answer_pk = findAnswer(question, i)
-
+            print "except"
             answer = get_object_or_404(Word, pk = answer_pk)
-            print ("POS: " + answer.part_of_speech)
+            print "except after 404"
+            #print ("POS: " + answer.part_of_speech)
             if str(answer.part_of_speech) == str(quiz.mode):
-                print(str(quiz.mode), str(answer.part_of_speech), str(answer.word))
+                #print(str(quiz.mode), str(answer.part_of_speech), str(answer.word))
                 correct_words = correct_words + answer.word + ", "
                 correct = False
 
