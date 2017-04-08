@@ -39,12 +39,38 @@ def makeWord(word, question, index):
     w.save()
     return w.pk
 
-def makeQuestion(sentence, mode, questionType):
+def makeQuestion(sentence, questionType, mode = "", possWords = [], correctWord = [], boldWord = []):
     # an idntify question is one where the question
     # asks the user to click on all the words of a particular POS
     # find all POS that match the mode
     # return None if there are no POS of the mode type in the sentence
     # populate correct_words field inside the Question model inside this function
+    questionPK = ""
+    if questionType == 0:
+        questionPK = makeQuestionPOSID(sentence, mode)
+    elif questionType == 1:
+        questionPK = makeQuestionHightlight(sentence, boldWord, possWords)
+    elif questionType == 2:
+        questionPK = makeQuestionRedact(sentence, correctWord, possWords)
+    else:
+        print "questionType out of range"
+
+    return questionPK
+
+
+def makeQuestionHightlight(sentence, highlightedWord, possWords):
+    q = Question(sentence = sentence, wordPKs = "")
+    q.save()
+
+    updatePKs(getPKsRedact(possWords, q), q)
+
+    QADict = highlightedWord.getQA()
+    question = updateQuestionAnswer(q, QADict)
+    q.save()
+
+    return q.pk
+
+def makeQuestionPOSID(sentence, mode):
     q = Question(sentence = joinSentence(sentence), wordPKs = "")
     q.save()
 
@@ -54,8 +80,8 @@ def makeQuestion(sentence, mode, questionType):
 
     if modeWords == []:
         return None
-
-    updateQuestionAnswer(modeWords, q, questionType)
+    question = {"Identify all the " + str(getPartOfSpeech(modeWords[0])) + "s in the above sentence.": modeWords}
+    updateQuestionAnswer(q, question)
 
     q.save()
     print q.correct_words
@@ -73,9 +99,9 @@ def makeQuestionRedact(sentence, correctWord, possWords):
 
     return q.pk
 
-def updateQuestionAnswer(modeWords, q, questionType):
+def updateQuestionAnswer(q, question):
     #i = random.randrange(0,len(modeWords))
-    question = getQuestion(modeWords,questionType)
+    #question = getQuestion(modeWords,questionType)
     dictKeys = question.keys()
     j = random.randrange(0,len(dictKeys))
     text = dictKeys[j]
@@ -160,9 +186,9 @@ def startQuiz(request):
             quiz.save()
 
             sentence = newsentence()
-            question = makeQuestion(sentence, mode, 0)
+            question = makeQuestion(sentence, 0, mode = mode)
             while question == None:
-                question = makeQuestion(sentence, mode, 0)
+                question = makeQuestion(sentence, 0, mode=mode)
             question_id = question
 
 
@@ -237,9 +263,9 @@ def submit(request, quiz_id, question_id):
 
         sentence = newsentence()
         mode = quiz.mode
-        question = makeQuestion(sentence, mode, 0)
+        question = makeQuestion(sentence, 0, mode=mode)
         while question == None:
-            question = makeQuestion(sentence, mode, 0)
+            question = makeQuestion(sentence, 0, mode=mode)
         question_id = question
 
         return redirect('quiz1', quiz_id = quiz.pk, question_id = question_id)
@@ -297,7 +323,7 @@ def lightningRound(request):
     random_index = random.randrange(0,len(modes))
     random_tuple = modes[random_index]
     mode = random_tuple[1]
-    question_id = makeQuestion(sentence,mode,0) # fix the hardcoded 1
+    question_id = makeQuestion(sentence, 0, mode = mode) # fix the hardcoded 1
     question = get_object_or_404(Question, pk = question_id)
     #correct_words = getCorrectWordsForQuestion(question, mode)
 
@@ -309,20 +335,13 @@ def doesPOSMatchMode(word, mode):
     return str(word.part_of_speech) == str(mode)
 
 def contains(arr, e):
-
     for k in arr:
-        print "k type "+str(type(k))
-        print "e type "+str(type(e))
-        print "k " + str(k).strip()
-        print "e " + str(e).strip()
-        #print str(k).strip() == str(e).strip()
         if str(k).strip() == str(e).strip():
-            print "True " + e
             return True
-    print "False " + e
     return False
 
 def scoreQuestion(request, question_id, mode):
+    boldWord = "" # bolded/redacted word for question types
     question = get_object_or_404(Question, pk = question_id)
     sentence = question.sentence
     words = question.word_set.all()
@@ -348,7 +367,7 @@ def scoreQuestion(request, question_id, mode):
         print "Word in scoreQuestion " + word
         correct = correct and contains(str(question.correct_words)[1:-1].split(","), word)    
     print "CORRECT "+str(correct)
-    return render(request, 'sentenceGen/lightningAnswer.html', {'sentence': question.sentence, 'mode': mode, 'question':question, 'correct_words': str(question.correct_words), 'chosen_words':chosen_words, 'correct':correct})
+    return render(request, 'sentenceGen/lightningAnswer.html', {'sentence': question.sentence, 'mode': mode, 'question':question, 'correct_words': str(question.correct_words), 'chosen_words':chosen_words, 'correct':correct, 'bolded_word':boldWord})
 
 
 

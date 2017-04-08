@@ -8,7 +8,7 @@
 {% block main %}
     <h1>Lightning Round</h1>
         <h4 id="sentence"> {{ sentence }} </h4>
-        <p> Choose all the {{ mode }}s </p>
+        <p> {{ question.text }} </p>
         <form action="/sentence/scoreQuestion/{{ question.pk }}/{{ mode }}/" method="post">
         {% csrf_token %}
         {% for word in question.word_set.all %}
