@@ -33,7 +33,7 @@ class Word(object): #this object represents a word in a sentence
     def setWord(self, w): self.word = w
 
     def getQA(self):
-        return {'What part of speech is the highlighted word?':self.getPOS(),
+        return {'What part of speech is the word ' + self.word + '?':self.getPOS(),
                 'What is the function of this word in the sentence?':\
                 self.getFunct()}
     

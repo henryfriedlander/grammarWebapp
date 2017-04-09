@@ -297,8 +297,6 @@ def getRandNoun(noun):
                 
 
 def getRandSubject(sing=randBool()):
-                       
-                       
     subj = Subject('', isSingular=sing,
                    isGerund = prob(5) or (freq.gerundFreq and not prob(5)),
                    isPronoun = prob(5),
