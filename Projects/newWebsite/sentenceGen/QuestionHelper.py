@@ -49,6 +49,9 @@ def makeAnswer(wordText, question, POSText, index):
     w.save()
     return w.pk
 
+def getPossibleQuestionModes():
+    return [(1, 'noun')]#, (2, 'adverb'), (3, 'adjective')]
+
 def makeRandQuestion():
     # get random question type
     # if 0, get random mode
@@ -56,7 +59,25 @@ def makeRandQuestion():
     # changes the function getQA so that it return a list of the possWords with the correct answer at index 0
     # if the type of the value inside the dictionary return by getQA is not a list,
     # then get random words from the sentence
-    return makePronounCaseQuestion()
+    questionPK = ""
+    sentence = getSentence.getSentence()
+    questionType = random.randrange(0,2)
+    if questionType == 0:
+        modes = getPossibleQuestionModes()
+        random_index = random.randrange(0,len(modes))
+        random_tuple = modes[random_index]
+        mode = random_tuple[1]
+        questionPK = makeQuestionPOSID(sentence, mode)
+    elif questionType == 1:
+        questionPK = makePronounCaseQuestion()
+    elif questionType == 2:
+        questionPK = makeQuestionHightlight(sentence, boldWord, possWords)
+    elif questionType == 3:
+        questionPK = makeQuestionRedact(sentence, correctWord, possWords)
+    else:
+        print "questionType out of range"
+
+    return questionPK
 
 def makeQuestion(sentence, questionType, mode = "", possWords = [], correctWord = [], boldWord = []):
     # an idntify question is one where the question
@@ -125,7 +146,7 @@ def makePronounCaseQuestion():
     updatePKs(getPKsAnswer(["I","me","myself"], q, "pronoun"), q)
     q.text = "Fill in the blank."
 
-    q.correct_words = "I"
+    q.correct_words = "[I]"
     q.save()
     return q.pk
 

@@ -200,6 +200,7 @@ def contains(arr, e):
     print "ARR "+str(arr)
     print "E "+str(e)
     for k in arr:
+        print k
         if str(k).strip() == str(e).strip():
             return 'true'
     return 'false'
@@ -213,6 +214,7 @@ def scoreQuestion(request, question_id, mode):
 
 
     print ("Correct Words: " + str(question.correct_words))
+    print "correct_words Type: " + str(type(question.correct_words))
 
     chosen_words = ""
 
@@ -229,8 +231,8 @@ def scoreQuestion(request, question_id, mode):
     print "SPLITTED "+str(chosen_words.split(", ")[:-1])
     for word in chosen_words.split(", ")[:-1]:
         print "Word in scoreQuestion " + word
-        correct = correct=='true' and contains(question.correct_words, word)    
-    print "CORRECT "+correct
+        if correct == 'true':
+            correct = contains(str(question.correct_words)[1:-1].split(","), word)
     return render(request, 'sentenceGen/lightningAnswer.html', {'sentence': question.sentence, 'mode': mode, 'question':question, 'correct_words': str(question.correct_words), 'chosen_words':chosen_words, 'correct':correct, 'bolded_word':boldWord})
 
 
