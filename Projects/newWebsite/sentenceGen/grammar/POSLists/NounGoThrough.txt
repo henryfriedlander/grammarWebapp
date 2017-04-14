@@ -1,0 +1,5 @@
+meadow
+field
+road
+landscape
+backyard*

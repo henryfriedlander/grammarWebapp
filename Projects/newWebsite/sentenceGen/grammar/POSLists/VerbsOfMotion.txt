@@ -1,0 +1,14 @@
+amble
+bolt
+charge
+crawl
+dart
+dash
+drive
+jog
+limp
+saunter
+trek
+travel
+tiptoe
+walk
