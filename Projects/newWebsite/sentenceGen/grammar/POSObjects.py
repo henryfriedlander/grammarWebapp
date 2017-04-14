@@ -1,5 +1,5 @@
 # reword the sentences so that the answers to the questions are the word
-
+from QAHelper import *
 
 class Word(object): #this object represents a word in a sentence
     def __init__(self, w, pos, funct = None):
@@ -33,9 +33,25 @@ class Word(object): #this object represents a word in a sentence
     def setWord(self, w): self.word = w
 
     def getQA(self):
-        return {'What part of speech is the word ' + self.word + '?':self.getPOS(),
-                'What is the function of this word in the sentence?':\
-                self.getFunct()}
+        QAs = []
+        QAs.append(self.getPOSQA())
+        QAs.append(self.getFunctQA())
+        return QAs
+
+    def getPOSQA(self):
+        return QASpecificWordResponse('What part of speech is the word ' + self.word + '?',\
+         self.getPOS(), [], self.word)
+
+    def getFunctQA(self):
+        if self.getPOS() == 'Noun':
+            return QASpecificWordResponse('What is function of ' + self.word + ' in this sentence',\
+         self.getPOS(), getNounFuncts(), self.word)
+        elif self.getPOS() == 'Verb':
+            return QASpecificWordResponse('What is function of ' + self.word + ' in this sentence',\
+         self.getPOS(), getVerbFuncts(), self.word)
+        else:
+            return QASpecificWordResponse('What is function of ' + self.word + ' in this sentence',\
+         self.getPOS(), getMiscFuncts(), self.word)
     
 class Noun(Word): #creates a noun object
     def __init__(self, w, function, isSing = True,
@@ -59,20 +75,25 @@ class Noun(Word): #creates a noun object
     def isSingular(self): return self.isSing
     def isGerund(self): return self.isGer
     def getPerson(self): return self.person
-    '''
-    def getQA(self):
-        return {'What part of speech is this word?',
-    '''
     
     #mutator methods
     def setIsPronoun(self, isPronoun): self.isPronoun = isPronoun
     def setPerson(self, person): self.person = person
 
     def getQA(self):
-        questions = {'What is the person of this word?':self.person,
-                     'Is this word singular or plural?':self.isSing,
-                     'Is this word a pronoun?': self.isPro}
-        return [super(Noun,self).getQA(), questions]
+        QAs = []
+        QAs.append(self.getNounNumberQA())
+        QAs.append(self.getPronounQA())
+        return super(Noun, self).getQA().extend(QAs)
+
+    def getNounNumberQA(self):
+        return QASpecificWordResponse('Is ' + self.getWord() + ' singular?',\
+         self.isSing, ['True', 'False'], self.getWord())
+    def getPronounQA(self):
+        return QASpecificWordResponse('Is ' + self.getWord() + ' a pronoun?',\
+         self.isPro, ['True', 'False'], self.getWord())
+    #TODO add this to a pronoun section 'What is the person of this word?':self.person,
+                     
     
 
 class Verb(Word):
@@ -103,12 +124,25 @@ class Verb(Word):
     def getPerson(self):
         return self.subject.getPerson()
     def getQA(self):
-        questions={'What is the voice of this verb?':\
-                   'active' if self.isActive else 'passive',
-                   'Is this verb singular?': self.singular,
-                   'What is the tense of this verb?':self.tense,
-                   'Is this verb the main verb?':self.isMainVerb}
-        return [super(Verb,self).getQA(), questions]
+        QAs = []
+        QAs.append(self.getVoiceQA())
+        QAs.append(self.getVerbNumberQA())
+        QAs.append(self.getTenseQA())
+        QAs.append(self.getMainVerbQA())
+        return super(Verb, self).getQA().extend(QAs)
+
+    def getVoiceQA(self):
+        return QASpecificWordResponse('What is the voice of ' + self.getWord() + '?',\
+         'active' if self.isActive else 'passive', ['active', 'passive'], self.getWord())
+    def getVerbNumberQA(self):
+        return QASpecificWordResponse('Is ' + self.getWord() + ' singular?',\
+         self.singular, ['singular', 'plural'], self.getWord())
+    def getTenseQA(self):
+        return QASpecificWordResponse('What is the tense of ' + self.getWord() + '?',\
+         self.tense, ['present', 'future', 'past'], self.word)
+    def getMainVerbQA(self):
+        return QASpecificWordResponse('Is ' + self.getWord() + ' the main verb?',\
+         self.isMainVerb, ['True', 'False'], self.word)
 
 #should I create a modifier object which would help organize my data
     
@@ -158,14 +192,22 @@ class relPro(Word): #relative pronoun
     def isNecessary(self): return self.necessary
 
     def getQA(self):
-        questions={'What is the antecedent of this relative pronoun?':\
-                   self.anteced,
-                   'Is this relative clause necessary to the sentence?':\
-                   self.isNecessary,
-                   'Is this an objective or subjective relative clause?':\
-                   self.typ+'ive clause'}
-        return [super(relPro,self).getQA(), questions]
+        QAs = []
+        QAs.append(self.getVoiceQA())
+        QAs.append(self.getVerbNumberQA())
+        QAs.append(self.getTenseQA())
+        QAs.append(self.getMainVerbQA())
+        return super(relPro, self).getQA().extend(QAs)
 
+    def getAntecedentQA(self):
+        return QASpecificWordResponse('What is the antecedent of ' + self.getWord() + '?',\
+         self.anteced, [], self.getWord())
+    def getNecessaryQA(self):
+        return QASpecificWordResponse('Is the relative clause in this sentence necessary to the sentence?',\
+         self.isNecessary, ['True', 'False'], self.getWord())
+    def getOborSubjQA(self):
+        return QASpecificWordResponse('Is the relative clause in this sentence an objective or subjective relative clause?',\
+         self.typ+'ive clause', ['Objective Clause', 'Subjective Clause'], self.getWord())
     
 class Determiner(Word):
     def __init__(self,w,POS = 'determiner',modifies=None,funct=None):
@@ -195,4 +237,13 @@ def testconcatDicts():
     d1 = {'hi':4,'hello':2}
     d2 = {'bye':5, 'byebye':1}
     assert(concatDicts([d1,d2])=={'hi':4,'hello':2,'bye':5, 'byebye':1})
+
+def getVerbFuncts():
+    return ['Action Verb', 'Linking Verb', 'Gerund', 'Participle']
+
+def getNounFuncts():
+    return ['Subject', 'Direct Object', 'Indirect Objecct', 'Object of the Preposition']
+
+def getMiscFuncts():
+    return ['Adjective', 'Conjunction', 'Preposition', 'Relative Pronoun', 'Determiner']
            

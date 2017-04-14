@@ -61,7 +61,7 @@ def makeRandQuestion():
     # then get random words from the sentence
     questionPK = ""
     sentence = getSentence.getSentence()
-    questionType = random.randrange(0,2)
+    questionType = 2#random.randrange(0,2)
     if questionType == 0:
         modes = getPossibleQuestionModes()
         random_index = random.randrange(0,len(modes))
@@ -71,7 +71,7 @@ def makeRandQuestion():
     elif questionType == 1:
         questionPK = makePronounCaseQuestion()
     elif questionType == 2:
-        questionPK = makeQuestionHightlight(sentence, boldWord, possWords)
+        questionPK = makeQuestionHightlight(sentence)
     elif questionType == 3:
         questionPK = makeQuestionRedact(sentence, correctWord, possWords)
     else:
@@ -98,14 +98,23 @@ def makeQuestion(sentence, questionType, mode = "", possWords = [], correctWord 
     return questionPK
 
 
-def makeQuestionHightlight(sentence, highlightedWord, possWords):
+def makeQuestionHightlight(sentence):
     q = Question(sentence = sentence, wordPKs = "")
     q.save()
 
+    highlightedWord = sentence[random.randrange(0,len(sentence))]
+    while type(highlightedWord) == str: 
+        ighlightedWord = sentence[random.randrange(0,len(sentence))]
+    # while loop until dont get a string
+    QAs = highlightedWord.getQA()
+    QA = QAs[random.randrange(0,len(QAs))]
+    q.text = QA.getQuestionTxt()
+    q.correct_words = QA.getCorrectWords()
+    possWords = QA.getAnswerChoices()
+    if possWords == [] or possWords == ['This verb does not have a subject']:
+        possWords.extend(joinSentence(sentence))
+        #while possWords <= 5 or limit number of answer choices
     updatePKs(getPKsRedact(possWords, q), q)
-
-    QADict = highlightedWord.getQA()
-    question = updateQuestionAnswer(q, QADict)
     q.save()
 
     return q.pk

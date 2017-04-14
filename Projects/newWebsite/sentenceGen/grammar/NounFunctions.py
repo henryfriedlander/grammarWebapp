@@ -1,5 +1,6 @@
 # import POSObjects
 from POSObjects import *
+from QAHelper import *
 
 class Subject(Noun): #a subject must have a verb
     def __init__(self, w, isSingular = True,
@@ -13,8 +14,13 @@ class Subject(Noun): #a subject must have a verb
     def getVerb(self):
         return self.verb
     def getQA(self):
-        questions={'What is this word the subject of?':self.verb}
-        return super(Subject,self).getQA().append(questions)
+        QAs = []
+        QAs.append(self.getSubjOfQA())
+        return super(Subject, self).getQA().extend(QAs)
+
+    def getSubjOfQA(self):
+        return QASpecificWordResponse('What is ' + self.getWord() + ' the subject of?',\
+         self.verb, [], self.getWord())
 
 class DO(Noun): #direct object of a verb
     #def __init__(self, w, isPronoun=False,isSingular=True,name = False, verb = None):
@@ -26,9 +32,11 @@ class DO(Noun): #direct object of a verb
         self.verb = verb
     def setVerb(verb):
         self.verb = verb
+        '''
     def getQA(self):
         questions={'This word is the object of which word?':self.verb}
         return super(DO,self).getQA().append(questions)
+    '''
     
 class IO(Noun): #indirect order
     def __init__(self, isSingular = False,
