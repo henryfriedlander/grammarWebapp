@@ -6,8 +6,7 @@ frm.submit(function (ev) {
         url: frm.attr('action'),
         data: frm.serialize(),
         success: function (data) {
-            alert('ok');
-            $('#lightning_answer').append(data);
+            $('#lightning_answer').html(data);
         },
         error: function (xhr, textStatus, errorThrown) {
             console.log("made it to repo comment function FAIL");

@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import random
 from . import forms
 from models import Quiz, Question, Word, Teacher
+from django.shortcuts import render_to_response
 
 from grammar import getSentence
 
@@ -233,7 +234,15 @@ def scoreQuestion(request, question_id, mode):
         print "Word in scoreQuestion " + word
         if correct == 'true':
             correct = contains(str(question.correct_words)[1:-1].split(","), word)
-    return render(request, 'sentenceGen/lightningAnswer.html', {'sentence': question.sentence, 'mode': mode, 'question':question, 'correct_words': str(question.correct_words), 'chosen_words':chosen_words, 'correct':correct, 'bolded_word':boldWord})
+
+    if chosen_words == "":
+        correct = 'false'
+    else:
+        chosen_words = chosen_words.rstrip(', ')
+
+
+    return render_to_response('sentenceGen/lightningResponse.html', {'correct':correct, 'chosen_words':chosen_words}, content_type="html")
+    #return render(request, 'sentenceGen/lightningAnswer.html', {'sentence': question.sentence, 'mode': mode, 'question':question, 'correct_words': str(question.correct_words), 'chosen_words':chosen_words, 'correct':correct, 'bolded_word':boldWord})
 
 
 
