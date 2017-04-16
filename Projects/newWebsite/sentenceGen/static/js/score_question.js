@@ -7,6 +7,7 @@ frm.submit(function (ev) {
         data: frm.serialize(),
         success: function (data) {
             $('#lightning_answer').html(data);
+            $('#score_submit_button').val("Try Again");
         },
         error: function (xhr, textStatus, errorThrown) {
             console.log("made it to repo comment function FAIL");
