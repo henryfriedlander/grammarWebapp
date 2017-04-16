@@ -7,28 +7,6 @@ from pattern.en import conjugate
 # no modifiers on gerunds
 # singular pural for determiners
 
-# def displaySentence():
-#     sentence=getSentence()
-#     strSent=getStrSent(sentence)
-#     print strSent
-#     for i in xrange(len(sentence)):
-#         word=sentence[i]
-#         print 'Questions about the ith word.'
-#         qs=word.getQA().keys()
-#         ans=word.getQA().values()
-#         print qs
-#         for i in xrange(len(qs)):
-#             question=qs[i]
-#             inp=input(question)
-#             if inp==ans[i]:
-#                 print 'CORRECT'
-#             else:
-#                 print 'INCORRET'
-#                 print 'CORRECT ANSWER '+ans[i]
-        
-        
-#     print sentence
-
 def getStrSent(sentence):
     w=sentence[0]
     word=w.getWord()
@@ -53,12 +31,6 @@ def getStrSent(sentence):
     
 def getSentence():
     init()
-    '''
-    if freq.doFreq and not prob(4):
-        getBase(index=1)
-    elif freq.ioFreq and not prob(4):
-        getBase(index=2)
-    '''
     return addDescriptors(getBase())
 
 def getBase():
@@ -433,7 +405,11 @@ def getRandActVerb(sing = randBool(), person = 3):
         print 'will has been added'
     else:
         tenseConjugate = tense
-    actV.setWord(str(conjugate(getRandVerb(actV), tense=tenseConjugate, person=person, number=number)))
+
+    wordtxt = conjugate(getRandVerb(actV), tense=tenseConjugate, person=person, number=number)
+    while wordtxt == None:
+        wordtxt = conjugate(getRandVerb(actV), tense=tenseConjugate, person=person, number=number)
+    actV.setWord(str(wordtxt))
     print "getRandActVerb: " + actV.getWord()
     print conjugate(getRandVerb(actV), tense=tense, person=person, number=number)
     return actV
@@ -473,4 +449,4 @@ def getRandPrepPhrase():
 def getRandWord(f):
     return random.choice(f.readlines()).rstrip()
 
-print "getSentence: " + str(getSentence())
+print "getSentence: " + getStrSent(getSentence())
