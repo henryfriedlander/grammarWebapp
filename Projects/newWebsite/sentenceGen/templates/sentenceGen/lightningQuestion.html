@@ -7,14 +7,15 @@
 {% endblock stylesheets %}
 {% block main %}
     <h1>Lightning Round</h1>
-        <h4 id="sentence"> {{ sentence }} </h4>
-        <p> {{ question.text }} </p>
-        <form action="/sentence/scoreQuestion/{{ question.pk }}/{{ mode }}/" method="post">
+        <h4 id="sentence"><span style="font-weight:bold"> {{ sentence }} </span></h4>
+        <h4> {{ question.text }} </h4>
+        <form id="lightning_score_sentence" action="/sentence/scoreQuestion/{{ question.pk }}/{{ mode }}/" method="post">
         {% csrf_token %}
         {% for word in question.word_set.all %}
             <input type="checkbox" name="word{{ forloop.counter}}" id="word{{ forloop.counter }}" value = "{{ word.id }}" />
             <label for="word{{ forloop.counter }}"> {{ word.word }} </label><br />
         {% endfor %}
-        <input type="submit" value="Score" />
+        <input id="score_submit_button" type="submit" value="Score" />
         </form>
+        <div id="lightning_answer"></div>
 {% endblock main %}

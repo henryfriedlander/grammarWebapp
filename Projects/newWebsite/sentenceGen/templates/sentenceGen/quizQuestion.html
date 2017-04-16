@@ -9,7 +9,7 @@
         <h1>Quiz</h1>
         <h4 id="sentence"> {{ sentence }} </h4>
         <p> Choose all the {{ mode }}s </p>
-        <form action="/sentence/submit/{{ quiz.pk }}/{{ question.pk }}/" method="post">
+        <form id="score_question_form" action="/sentence/submit/{{ quiz.pk }}/{{ question.pk }}/" method="post">
         {% csrf_token %}
         {% for word in question.word_set.all %}
             <input type="checkbox" name="word{{ forloop.counter}}" id="word{{ forloop.counter }}" value = "{{ word.id }}" />
