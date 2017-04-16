@@ -61,7 +61,7 @@ def makeRandQuestion():
     # then get random words from the sentence
     questionPK = ""
     sentence = getSentence.getSentence()
-    questionType = 2#random.randrange(0,2)
+    questionType = random.randrange(0,2)
     if questionType == 0:
         modes = getPossibleQuestionModes()
         random_index = random.randrange(0,len(modes))

@@ -2,6 +2,7 @@ import random
 from verbFunctions import *
 from NounFunctions import *
 from POSObjects import *
+from pattern.en import conjugate
 
 # no modifiers on gerunds
 # singular pural for determiners
@@ -52,38 +53,58 @@ def getStrSent(sentence):
     
 def getSentence():
     init()
+    '''
     if freq.doFreq and not prob(4):
         getBase(index=1)
     elif freq.ioFreq and not prob(4):
         getBase(index=2)
-    
+    '''
     return addDescriptors(getBase())
 
-def getBase(index=-1):
+def getBase():
     sing = randBool()
     subject = getRandSubject(sing=sing)
     actionVerb = getRandActVerb(sing=sing)
     do = getRandDO()
     pa = getRandAdjective()
+    # get random linking verb 
     
     bases = [
-        [subject,actionVerb],
-        [subject,actionVerb,do],
+        [subject, actionVerb],
+        [subject, actionVerb, do]
         ]
-    
-    if index!=-1 and not prob(4):
-        index = random.randint(0,len(bases)-1)
-        if index==1:
-            makeRels1(bases[index])
-        if index == 2:
-            makeRels1(bases[index][:2])
-            makeRels2(bases[index])
-        if index == 3:
-            makeRels1(bases[index][:2])
-            makeRels3(bases[index])
+
+    index = random.randint(0,len(bases)-1) # get the index of a random base
+    indexOfActionVerb = -1
+    if actionVerb in bases:
+        indexOfActionVerb = bases[index].index(actionVerb) # REMOVE THE HARDCODE
+    print "indexOfActionVerb: " + str(indexOfActionVerb)
+    makeRels(bases, index)
+
+    print "action verb tense: " + str(actionVerb.getTense())
+    base = bases[index]
+    if indexOfActionVerb != -1:
+        base = addHelpingVerbs(bases[index], indexOfActionVerb)
     #there are no words in base just line numbers of the file
-    #print bases[index]
-    return bases[index]
+    print "base: " + str(base)
+    return base
+
+def addHelpingVerbs(base, indexOfActionVerb):
+    actionVerb = base[indexOfActionVerb]
+    helpingVerbs = actionVerb.getHelpingVerbs()
+    if helpingVerbs != []:
+        while helpingVerbs != []:
+            base.insert(indexOfActionVerb, helpingVerbs.pop())
+    return base
+def makeRels(bases, index):
+    if index==1:
+        makeRels1(bases[index])
+    if index == 2:
+        makeRels1(bases[index][:2])
+        makeRels2(bases[index])
+    if index == 3:
+        makeRels1(bases[index][:2])
+        makeRels3(bases[index])
 
 def makeRels1(base):
     base[0].setVerb(base[1])
@@ -229,8 +250,10 @@ def getRandRelPro(antec):
     typ = ['object', 'subject'][random.randint(0,1)]
     if antec.isName():
         relPros = ['who','whose']
+        '''
         if antec == 'subject':
             relPro[0] = 'whom'
+        '''
     else:
         relPros = ['which','that']
         nec = bool(index)
@@ -247,9 +270,11 @@ def getClause(typ):
     if typ == 'possessive':
         return getBase()
     elif typ == 'subject':
-        return [getRandActVerb(), getRandObjPP()]
+        base = [getRandActVerb(), getRandObjPP()]
+        return addHelpingVerbs(base, 0)
     else:
-        return [getRandSubject(),getRandActVerb()]
+        base = [getRandSubject(),getRandActVerb()]
+        return addHelpingVerbs(base, 1)
 #DOES NOT WORK
 def getRandDeterminer(modifies):
     
@@ -285,6 +310,7 @@ def isVowel(ch):
     return ch.lower() in set(['a','e','i','o','u'])
 
 def getRandNoun(noun):
+    # add singular functionality using patterns.en
     if noun.isGerund():
         f = open('./sentenceGen/grammar/POSLists/actionVerbs.txt')
         return addIng(getRandWord(f))
@@ -311,15 +337,19 @@ def getRandOOP(prep):
     return op
 
 def getRandDO():
-    do = DO('',isPronoun = prob(5),name = False, isSingular = randBool(), isGerund = False)
+    isSingular = randBool()
+    do = DO('',isPronoun = prob(5),name = False, isSingular = isSingular, isGerund = False)
+    
     do.setWord(getRandNoun(do))
     return do
 
 def getRandVerb(verb):
     # gets a random verb according to the predetermined, randomly generated criteria
     if verb.getFunct() == 'action verb':
-        f = open('./sentenceGen/grammar/POSLists/actionVerbs.txt')
-        return getRandWord(f)
+        f = open('./sentenceGen/grammar/POSLists/ActionVerbs.txt')
+        wordtxt = getRandWord(f)
+        print "wordtxt: " + wordtxt
+        return wordtxt
     else:
         f = open('./sentenceGen/grammar/POSLists/linkingVerbs.txt')
         
@@ -359,9 +389,22 @@ def addEd(verb):
     word+='ed'
     verb.setWord(word)
 
-def getRandActVerb(sing=randBool()):
-    actV = ActionVerb('', getRandTense, isSingular=sing,isCompleted = randBool())
-    actV.setWord(getRandVerb(actV))
+def getRandActVerb(sing = randBool(), person = 3):
+    actV = ActionVerb('', getRandTense(), isSingular=sing, isCompleted = randBool())
+    tense = actV.getTense()
+    number = 'singular' if actV.isSingular else 'plural'
+    print "tense: " + tense
+    if tense == 'future':
+        tenseConjugate = 'present'
+        will = helpingVerb('will', tense, actV)
+        number = 'plural'
+        actV.setHelpingVerbs([will])
+        print 'will has been added'
+    else:
+        tenseConjugate = tense
+    actV.setWord(str(conjugate(getRandVerb(actV), tense=tenseConjugate, person=person, number=number)))
+    print "getRandActVerb: " + actV.getWord()
+    print conjugate(getRandVerb(actV), tense=tense, person=person, number=number)
     return actV
 #---------------Tenses----------------#
 
@@ -398,4 +441,4 @@ def getRandPrepPhrase():
 def getRandWord(f):
     return random.choice(f.readlines()).rstrip()
 
-print getSentence()
+print "getSentence: " + str(getSentence())

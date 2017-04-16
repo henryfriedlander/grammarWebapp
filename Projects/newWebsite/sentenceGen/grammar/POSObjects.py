@@ -9,7 +9,7 @@ class Word(object): #this object represents a word in a sentence
         #List means that multiple accepted values.
         #first element of list will always be most complete form of data
         #i.e. Direct Object will have list ['direct object','do']
-        self.funct=funct 
+        self.funct=funct
         
     #accessor methods
     def getWord(self): return self.word
@@ -99,12 +99,14 @@ class Noun(Word): #creates a noun object
 class Verb(Word):
     def __init__(self, w, function, tense, subject = None,
                  isSingular = True, isCompleted = True,
-                 isActive = True, isMainVerb = False):
+                 isActive = True, isMainVerb = False, helpingVerbs = []):
         self.isSingular = isSingular
         self.isCompleted = isCompleted
         self.isActive = isActive
         self.isMainVerb = isMainVerb
         self.subject = subject
+        self.tense = tense
+        self.helpingVerbs = helpingVerbs
         super(Verb, self).__init__(w,'verb',function)
 
 
@@ -114,12 +116,16 @@ class Verb(Word):
     def setVoice(self,isActive):
         self.isActive=isActive
         return self
+    def setHelpingVerbs(self, helpingVerbs):
+        self.helpingVerbs = helpingVerbs
+
     def getSubject(self): return self.subject
     def getTense(self): return self.tense
     def isSingular(self): return isSingular
     def isCompleted(self): return self.isComplete
     def isActive(self): return self.isActive
-    def isMainVerb(self): return isMainVerb
+    def isMainVerb(self): return self.isMainVerb
+    def getHelpingVerbs(self): return self.helpingVerbs
 
     def getPerson(self):
         return self.subject.getPerson()
@@ -193,10 +199,9 @@ class relPro(Word): #relative pronoun
 
     def getQA(self):
         QAs = []
-        QAs.append(self.getVoiceQA())
-        QAs.append(self.getVerbNumberQA())
-        QAs.append(self.getTenseQA())
-        QAs.append(self.getMainVerbQA())
+        QAs.append(self.getAntecedentQA())
+        QAs.append(self.getNecessaryQA())
+        QAs.append(self.getOborSubjQA())
         return super(relPro, self).getQA().extend(QAs)
 
     def getAntecedentQA(self):
