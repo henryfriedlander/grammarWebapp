@@ -6,10 +6,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/quizStyle.css' %}" />
 {% endblock stylesheets %}
 {% block main %}
-        <p>QUIZ</p>
+        <h1>Quiz</h1>
         <h4 id="sentence"> {{ sentence }} </h4>
         <p> Choose all the {{ mode }}s </p>
-        <p> {{ quiz.teacher }} </p>
         <form action="/sentence/submit/{{ quiz.pk }}/{{ question.pk }}/" method="post">
         {% csrf_token %}
         {% for word in question.word_set.all %}
