@@ -15,7 +15,7 @@
             <input type="checkbox" name="word{{ forloop.counter}}" id="word{{ forloop.counter }}" value = "{{ word.id }}" />
             <label for="word{{ forloop.counter }}"> {{ word.word }} </label><br />
         {% endfor %}
-        <input type="submit" value="Score" />
+        <input id="score_submit_button" type="submit" value="Score" />
         </form>
         <div id="lightning_answer"></div>
 {% endblock main %}
