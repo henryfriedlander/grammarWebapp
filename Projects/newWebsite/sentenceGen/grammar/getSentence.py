@@ -76,7 +76,7 @@ def getBase():
 
     index = random.randint(0,len(bases)-1) # get the index of a random base
     indexOfActionVerb = -1
-    if actionVerb in bases:
+    if actionVerb in bases[index]:
         indexOfActionVerb = bases[index].index(actionVerb) # REMOVE THE HARDCODE
     print "indexOfActionVerb: " + str(indexOfActionVerb)
     makeRels(bases, index)
@@ -118,14 +118,15 @@ def makeRels3(base):
 def addDescriptors(base):
     #should I add the words in this function?
     sentence = [] #final sentence descriptors
+    print "beginning for loop addDescriptors"
     for word in base:
-        print word.getWord(),
+        print "GET WORD " + word.getWord()
         # the car OF Jonah
         if word == 'noun' or word == 'pronoun':
             sentence += addDescriptorsNoun(word)
         if word == 'verb':
             sentence += addDescriptorsVerb(word)
-        print "after word: ", sentence
+        print "after word: " + str(sentence)
     for w in sentence:
         print repr(w)
     print sentence
@@ -193,11 +194,17 @@ def addDescriptorsVerb(word):
                 sentence += [Adverb('very',adv)]
             sentence += [adv]
         sentence += [word]
+    if word == 'helping verb':
+        sentence += [word]
     print "sentence after: ", sentence
     return sentence
 
 def addDescriptorsNoun(word):
     sentence=[]
+    if word.isPronoun():
+        print "is a pronoun" 
+    else:
+        print "not a pronoun"
     if not word.isPronoun():
         if not word.isName() and not word.isGerund:
             print 'inside'
@@ -217,14 +224,36 @@ def addDescriptorsNoun(word):
             if not nec:
                 sentence+=[',']
     else:
-        sentence += [getRandSubjPron(word)]
+        # fix when I add functionality for "of I" -- it's "my"
+        print "THIS WORD IS A PRONOUN"
+        if word == 'subject':
+            sentence += [getRandSubjPron(word)]
+        else:
+            sentence += [getRandObjPron(word)]
+
     return sentence
 
+def getRandObjPron(word):
+    objPronouns = ['us', 'them'], ['me', 'you', 'him', 'her', 'it']
+
+    w = random.choice(objPronouns[int(word.isSingular())])
+    word.setWord(w)
+    print "Object Pronoun set to " + w
+    if w == 'us' or w == 'me':
+        word.setPerson(1)
+    elif w == 'you':
+        word.setPerson(2)
+    else:
+        word.setPerson(3)
+    word.setIsPronoun(True)
+    return word
+
 def getRandSubjPron(word):
-    pronouns = [['we','they'],['I','you','he','she','it']]
+    subjPronouns = [['we','they'],['I','you','he','she','it']]
     
-    word.setWord(random.choice(pronouns[int(word.isSingular())]))
-    w=word.getWord()
+    w = random.choice(subjPronouns[int(word.isSingular())])
+    word.setWord(w)
+    print "Subject Pronoun set to " + w
     if w == 'we' or w == 'I':
         word.setPerson(1)
     elif w == 'you':
@@ -270,7 +299,7 @@ def getClause(typ):
     if typ == 'possessive':
         return getBase()
     elif typ == 'subject':
-        base = [getRandActVerb(), getRandObjPP()]
+        base = [getRandActVerb(), getRandObjPron(getRandDO(isPronoun = True))]
         return addHelpingVerbs(base, 0)
     else:
         base = [getRandSubject(),getRandActVerb()]
@@ -336,9 +365,11 @@ def getRandOOP(prep):
     op.setWord(getRandNoun(op))
     return op
 
-def getRandDO():
+def getRandDO(isPronoun = None):
+    if isPronoun == None:
+        isPronoun = prob(5)
     isSingular = randBool()
-    do = DO('',isPronoun = prob(5),name = False, isSingular = isSingular, isGerund = False)
+    do = DO('',isPronoun = isPronoun,name = False, isSingular = isSingular, isGerund = False)
     
     do.setWord(getRandNoun(do))
     return do
@@ -430,6 +461,7 @@ def getRandTense():
 def getRandObjPP():
     #NEEDS TO RETURN OBJECT
     # get random objective personal pronouns
+    print "INSIDE getRandObjPP"
     pps = ['me']*3+['you','him','her','it','us']+3*['them']
     return pps[random.randint(0,len(pps)-1)]
 
