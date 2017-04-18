@@ -43,10 +43,10 @@ class Word(object): #this object represents a word in a sentence
          self.getPOS(), [], self.word)
 
     def getFunctQA(self):
-        if self.getPOS() == 'Noun':
+        if self.getPOS() == 'noun':
             return QASpecificWordResponse('What is function of ' + self.word + ' in this sentence',\
          self.getPOS(), getNounFuncts(), self.word)
-        elif self.getPOS() == 'Verb':
+        elif self.getPOS() == 'verb':
             return QASpecificWordResponse('What is function of ' + self.word + ' in this sentence',\
          self.getPOS(), getVerbFuncts(), self.word)
         else:
@@ -55,7 +55,8 @@ class Word(object): #this object represents a word in a sentence
     
 class Noun(Word): #creates a noun object
     def __init__(self, w, function, isSing = True,
-                 isPronoun = False, isGer = False, name = False,person=3):
+                 isPronoun = False, isGer = False, 
+                 name = False, person=3, determiner = None):
         if name:
             isSing = True
             isGer = False
@@ -64,6 +65,7 @@ class Noun(Word): #creates a noun object
         self.isPro = isPronoun
         self.isGer = isGer
         self.person=person
+        self.determiner = None
         POS = 'noun'
         if isPronoun:
             POS = 'pronoun'
@@ -75,10 +77,12 @@ class Noun(Word): #creates a noun object
     def isSingular(self): return self.isSing
     def isGerund(self): return self.isGer
     def getPerson(self): return self.person
+    def getDeterminer(self): return self.determiner
     
     #mutator methods
     def setIsPronoun(self, isPronoun): self.isPronoun = isPronoun
     def setPerson(self, person): self.person = person
+    def setDeterminer(self, determiner): self.determiner = determiner
 
     def getQA(self):
         QAs = []
@@ -142,7 +146,7 @@ class Verb(Word):
          'active' if self.isActive else 'passive', ['active', 'passive'], self.getWord())
     def getVerbNumberQA(self):
         return QASpecificWordResponse('Is ' + self.getWord() + ' singular?',\
-         self.singular, ['singular', 'plural'], self.getWord())
+         self.isSingular, ['True', 'False'], self.getWord())
     def getTenseQA(self):
         return QASpecificWordResponse('What is the tense of ' + self.getWord() + '?',\
          self.tense, ['present', 'future', 'past'], self.word)
@@ -247,7 +251,7 @@ def getVerbFuncts():
     return ['Action Verb', 'Linking Verb', 'Gerund', 'Participle']
 
 def getNounFuncts():
-    return ['Subject', 'Direct Object', 'Indirect Objecct', 'Object of the Preposition']
+    return ['Subject', 'Direct Object', 'Indirect Object', 'Object of the Preposition']
 
 def getMiscFuncts():
     return ['Adjective', 'Conjunction', 'Preposition', 'Relative Pronoun', 'Determiner']

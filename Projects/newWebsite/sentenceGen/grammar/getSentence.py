@@ -3,6 +3,7 @@ from verbFunctions import *
 from NounFunctions import *
 from POSObjects import *
 from pattern.en import conjugate
+from pattern.en import pluralize
 
 # no modifiers on gerunds
 # singular pural for determiners
@@ -26,8 +27,6 @@ def getStrSent(sentence):
         strSent = strSent[:-1]
     strSent = strSent[:-1] + '.'
     return strSent
-    
-
     
 def getSentence():
     init()
@@ -57,6 +56,8 @@ def getBase():
     base = bases[index]
     if indexOfActionVerb != -1:
         base = addHelpingVerbs(bases[index], indexOfActionVerb)
+
+    #base = addDeterminers(base)
     #there are no words in base just line numbers of the file
     print "base: " + str(base)
     return base
@@ -68,6 +69,27 @@ def addHelpingVerbs(base, indexOfActionVerb):
         while helpingVerbs != []:
             base.insert(indexOfActionVerb, helpingVerbs.pop())
     return base
+
+def addDeterminers(base):
+    nounIndicesAfterDeterminersAdded = []
+    offset = 0
+    for i in xrange(len(base)):
+        if base[i] == "noun":
+            nounIndicesAfterDeterminersAdded+=[i+offset]
+            offset+=1
+
+    for i in nounIndicesAfterDeterminersAdded:
+        base = addDeterminer(base, i)
+
+    return base
+
+def addDeterminer(base, indexOfNoun):
+    noun = base[indexOfNoun]
+    determiner = noun.getDeterminer()
+    if determiner != None:
+        base.insert(indexOfNoun, determiner)
+    return base
+
 def makeRels(bases, index):
     if index==1:
         makeRels1(bases[index])
@@ -95,9 +117,11 @@ def addDescriptors(base):
         print "GET WORD " + word.getWord()
         # the car OF Jonah
         if word == 'noun' or word == 'pronoun':
-            sentence += addDescriptorsNoun(word)
+            sentence += addDescriptorsNoun(word, word is base[-1])
         if word == 'verb':
             sentence += addDescriptorsVerb(word)
+        if word == 'determiner':
+            sentence += [word]
         print "after word: " + str(sentence)
     for w in sentence:
         print repr(w)
@@ -144,7 +168,6 @@ def increaseFreq(pos):
     if pos == 'direct object' or pos==4:
         increaseDOFreq()
 
-
 def testIncreaseFreq():
     init()
     increaseRelFreq('relative pronoun')
@@ -154,7 +177,6 @@ def testIncreaseFreq():
     increaseParticipleFreq()
     assert(participleFreq==True)
     init()
-
 
 def addDescriptorsVerb(word):
     sentence=[]
@@ -171,14 +193,10 @@ def addDescriptorsVerb(word):
     print "sentence after: ", sentence
     return sentence
 
-def addDescriptorsNoun(word):
+def addDescriptorsNoun(word, isLastWord):
     sentence=[]
-    if word.isPronoun():
-        print "is a pronoun" 
-    else:
-        print "not a pronoun"
     if not word.isPronoun():
-        if not word.isName() and not word.isGerund:
+        if not word.isName() and not word.isGerund():
             print 'inside'
             sentence += [getRandDeterminer(word)]
             if prob(5) or (freq.adjFreq and not prob(5)): # add an adjective if not a name
@@ -193,7 +211,7 @@ def addDescriptorsNoun(word):
             relativePro,nec = getRandRelPro(word)
             sentence += relativePro
             print sentence
-            if not nec:
+            if not nec and not isLastWord:
                 sentence+=[',']
     else:
         # fix when I add functionality for "of I" -- it's "my"
@@ -272,10 +290,10 @@ def getClause(typ):
         return getBase()
     elif typ == 'subject':
         base = [getRandActVerb(), getRandObjPron(getRandDO(isPronoun = True))]
-        return addHelpingVerbs(base, 0)
+        return addDeterminers(addHelpingVerbs(base, 0))
     else:
         base = [getRandSubject(),getRandActVerb()]
-        return addHelpingVerbs(base, 1)
+        return addDeterminers(addHelpingVerbs(base, 1))
 #DOES NOT WORK
 def getRandDeterminer(modifies):
     
@@ -287,8 +305,8 @@ def getRandDeterminer(modifies):
     # randomly choosing demonstrative pronoun article or possessive pronoun
     if typ == 0:
         function = 'article'
-        if modifies.isSingular():
-            index=2
+        if not modifies.isSingular():
+            index=1
         else:
             index = random.randint(0,len(determiners[typ])-1)
     elif typ == 1:
@@ -301,7 +319,7 @@ def getRandDeterminer(modifies):
         function = 'possessive pronoun'
         index = random.randint(0,len(determiners[typ])-1)
     
-    print "get determiner: ", determiners[typ][index]
+    print "get determiner: " + determiners[typ][index]
     return Determiner(determiners[typ][index], modifies = modifies,
                       funct = function)
 
@@ -320,15 +338,33 @@ def getRandNoun(noun):
             f = open('./sentenceGen/grammar/POSLists/nameList.txt')
         else:
             f = open('./sentenceGen/grammar/POSLists/nounList.txt')
-        return getRandWord(f)+('s' if noun.isSingular() else '')
+        randWord = getRandWord(f)
+        return (randWord if noun.isSingular() else pluralize(randWord))
                 
 
 def getRandSubject(sing=randBool()):
+    isPronoun = prob(5)
+
+    if isPronoun:
+        isGerund = False
+    else:
+        isGerund = prob(5) or (freq.gerundFreq and not prob(5))
+    if sing:
+        name = prob(2)
+    else:
+        name = False
+
     subj = Subject('', isSingular=sing,
-                   isGerund = prob(5) or (freq.gerundFreq and not prob(5)),
-                   isPronoun = prob(5),
-                   name = False) #NEED TO CHANGE
+                   isGerund = isGerund,
+                   isPronoun = isPronoun,
+                   name = name) #NEED TO CHANGE
+
     subj.setWord(getRandNoun(subj))
+
+    if not isPronoun:
+        determiner = getRandDeterminer(subj)
+        subj.setDeterminer(determiner)
+
     return subj
 
 def getRandOOP(prep):
@@ -341,7 +377,7 @@ def getRandDO(isPronoun = None):
     if isPronoun == None:
         isPronoun = prob(5)
     isSingular = randBool()
-    do = DO('',isPronoun = isPronoun,name = False, isSingular = isSingular, isGerund = False)
+    do = DO('', isPronoun = isPronoun, name = False, isSingular = isSingular, isGerund = False)
     
     do.setWord(getRandNoun(do))
     return do
@@ -449,4 +485,4 @@ def getRandPrepPhrase():
 def getRandWord(f):
     return random.choice(f.readlines()).rstrip()
 
-print "getSentence: " + getStrSent(getSentence())
+#print "getSentence: " + getStrSent(getSentence())
