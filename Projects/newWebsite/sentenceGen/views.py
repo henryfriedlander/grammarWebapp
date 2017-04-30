@@ -16,7 +16,7 @@ def newsentence():
     return getSentence.getSentence()
 
 def generate(request):
-    sentence = joinSentence(newsentence())
+    sentence = makeRandQuestion(input = 1)
     return render(request, 'sentenceGen/generate.html', {'sentence': sentence})
 
 def quiz(request):

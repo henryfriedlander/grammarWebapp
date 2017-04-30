@@ -38,7 +38,7 @@ def getBase():
     actionVerb = getRandActVerb(sing=sing)
     do = getRandDO()
     pa = getRandAdjective()
-    # get random linking verb 
+    # get random linking verb
     
     bases = [
         [subject, actionVerb],
@@ -278,18 +278,18 @@ def getRandRelPro(antec):
         nec = bool(index)
     relPron = relPros[index]
     if relPron == 'whose': typ = 'possessive'
-    clause = getClause(typ)
+    clause = getClause(typ, antec)
     print "clause: ", clause
     res = [relPro(relPron, antecedent = antec, necessary = nec)]
     res += clause
     if not nec: res=[',']+res #adds commas for unneccessary clauses
     return res,nec
 
-def getClause(typ):
+def getClause(typ, antec):
     if typ == 'possessive':
         return getBase()
     elif typ == 'subject':
-        base = [getRandActVerb(), getRandObjPron(getRandDO(isPronoun = True))]
+        base = [getRandActVerb(sing = antec.isSingular()), getRandObjPron(getRandDO(isPronoun = True))]
         return addDeterminers(addHelpingVerbs(base, 0))
     else:
         base = [getRandSubject(),getRandActVerb()]
