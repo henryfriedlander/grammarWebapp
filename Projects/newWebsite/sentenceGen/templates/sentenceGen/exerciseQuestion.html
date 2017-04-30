@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Lightning{% endblock %}
+
+{% block stylesheets %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/quizStyle.css' %}" />
+{% endblock stylesheets %}
+{% block main %}
+    <h1>Lightning Round</h1>
+        <h4 id="sentence"><span style="font-weight:bold"> {{ sentence }} </span></h4>
+        <h4> {{ question.text }} </h4>
+        <form id="lightning_score_sentence" action="/sentence/scoreExerciseQuestion/{{ question.pk }}/{{ exerciseID }}/" method="post">
+        {% csrf_token %}
+        {% for word in question.word_set.all %}
+            <input type="checkbox" name="word{{ forloop.counter}}" id="word{{ forloop.counter }}" value = "{{ word.id }}" />
+            <label for="word{{ forloop.counter }}"> {{ word.word }} </label><br />
+        {% endfor %}
+        <input id="score_submit_button" type="submit" value="Score" />
+        </form>
+        <div id="lightning_answer"></div>
+{% endblock main %}

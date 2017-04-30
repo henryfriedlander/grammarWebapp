@@ -1,6 +1,7 @@
 import abc
+from QuestionHelper import makeWhomQuestion
 
-class Exercise(Object):
+class Exercise(object):
 	def __init__(self, name, exerciseID):
 		self.exerciseID = exerciseID
 		self.name = name
@@ -20,6 +21,10 @@ class Exercise(Object):
 
 class WhoOrWhomExercise(Exercise):
 	def __init__(self):
-		super(WhoOrWhomExercise, self).__init__("Who or Whom?", 1)
+		super(WhoOrWhomExercise, self).__init__("Who or Whom?", 0)
 	
 	def getQuestion(self):
+		return makeWhomQuestion()
+	def getLesson(self):
+		#READ Lesson from some file
+		return "WHO OR WHOM EXERCISE LESSON"

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Lightning{% endblock %}
+
+{% block stylesheets %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/quizStyle.css' %}" />
+{% endblock stylesheets %}
+{% block main %}
+    {{ lesson }}
+{% endblock main %}

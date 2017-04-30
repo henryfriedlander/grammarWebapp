@@ -16,4 +16,8 @@ urlpatterns = [
     url(r'^viewScores/(?P<teacher_id>\d+)/', views.viewScores, name = 'viewScores'), # teacher can view scores of their students. 
     url(r'^lightningRound/', views.lightningRound, name='lightningRound'),
     url(r'^scoreQuestion/(?P<question_id>\d+)/(?P<mode>\w+)/', views.scoreQuestion, name='scoreQuestion'),
+    url(r'^exercises/', views.displayExercises, name='exercises'),
+    url(r'^lesson/(?P<exerciseID>\d+)/', views.displayLesson, name='lesson'),
+    url(r'^exercise/(?P<exerciseID>\d+)/', views.displayExercise, name='exercise'),
+    url(r'^scoreExerciseQuestion/(?P<question_id>\d+)/(?P<exerciseID>\d+)/', views.scoreExerciseQuestion, name='scoreExerciseQuestion'),
 ]

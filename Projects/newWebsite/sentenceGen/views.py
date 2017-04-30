@@ -8,6 +8,8 @@ from django.shortcuts import render_to_response
 from grammar import getSentence
 
 from QuestionHelper import *
+from Exercise import *
+from ExerciseFactory import *
 
 def home(request):
     return render(request, 'sentenceGen/home.html')
@@ -208,12 +210,22 @@ def contains(arr, e):
 
 def getExercises():
     exercises = [
-        Exercise("I or Me?", 0),
-        Exercise("Who or Whom?", 1),
+        WhoOrWhomExercise(),
     ]
     return exercises
 
-def scoreQuestion(request, question_id, mode):
+def displayExercises(request):
+    return render(request, 'sentenceGen/exercisesListPage.html', {'exercises': getExercises()})
+
+def displayLesson(request, exerciseID):
+    return render(request, 'sentenceGen/exerciseLessonPage.html', {'lesson': ExerciseFactory().getExercise(exerciseID).getLesson()})
+
+def displayExercise(request, exerciseID):
+    question_id = ExerciseFactory().getExercise(exerciseID).getQuestion()
+    question = get_object_or_404(Question, pk = question_id)
+    return render(request, 'sentenceGen/exerciseQuestion.html', {'exerciseID': exerciseID, 'sentence': question.sentence, 'question':question})
+
+def scoreGeneralQuestion(request, question_id):
     boldWord = "" # bolded/redacted word for question types
     question = get_object_or_404(Question, pk = question_id)
     sentence = question.sentence
@@ -247,9 +259,16 @@ def scoreQuestion(request, question_id, mode):
     else:
         chosen_words = chosen_words.rstrip(', ')
 
+    context = {'correct':correct, 'chosen_words':chosen_words}
 
-    return render_to_response('sentenceGen/lightningResponse.html', {'correct':correct, 'chosen_words':chosen_words}, content_type="html")
+    return context
+
+def scoreQuestion(request, question_id, mode):
+
+    return render_to_response('sentenceGen/lightningResponse.html', scoreGeneralQuestion(request, question_id), content_type="html")
     #return render(request, 'sentenceGen/lightningAnswer.html', {'sentence': question.sentence, 'mode': mode, 'question':question, 'correct_words': str(question.correct_words), 'chosen_words':chosen_words, 'correct':correct, 'bolded_word':boldWord})
 
-
-
+def scoreExerciseQuestion(request, question_id, exerciseID):
+    context = scoreGeneralQuestion(request, question_id)
+    context['exerciseID'] = exerciseID
+    return render_to_response('sentenceGen/exerciseResponse.html', context, content_type="html")
