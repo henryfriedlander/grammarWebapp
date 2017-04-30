@@ -211,6 +211,7 @@ def getExercises():
         Exercise("I or Me?", 0),
         Exercise("Who or Whom?", 1),
     ]
+    return exercises
 
 def scoreQuestion(request, question_id, mode):
     boldWord = "" # bolded/redacted word for question types

@@ -20,4 +20,6 @@ class Exercise(Object):
 
 class WhoOrWhomExercise(Exercise):
 	def __init__(self):
-		super(WhoOrWhomExercise, self).__init__(name, exerciseID)
+		super(WhoOrWhomExercise, self).__init__("Who or Whom?", 1)
+	
+	def getQuestion(self):
