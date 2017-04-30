@@ -206,6 +206,12 @@ def contains(arr, e):
             return 'true'
     return 'false'
 
+def getExercises():
+    exercises = [
+        Exercise("I or Me?", 0),
+        Exercise("Who or Whom?", 1),
+    ]
+
 def scoreQuestion(request, question_id, mode):
     boldWord = "" # bolded/redacted word for question types
     question = get_object_or_404(Question, pk = question_id)
