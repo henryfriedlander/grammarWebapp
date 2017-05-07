@@ -63,9 +63,9 @@ def makeRandQuestion(input = 0):
     # then get random words from the sentence
     questionPK = ""
     sentence = getSentence.getSentence()
-    numQuestions = 29
+    numQuestions = 35
     if True in questionNumber[:numQuestions+1]:
-        questionType = random.randint(1,numQuestions)
+        questionType = 36#random.randint(1,numQuestions)
         if not questionNumber[questionType]:
             while not questionNumber[questionType]:
                 print "IN WHILE LOOP!!!!!!!"
@@ -74,7 +74,7 @@ def makeRandQuestion(input = 0):
         questionType = 0
     print "questionType " + str(questionType)
     #questionType = 2# random.randrange(0,2)
-
+    print "Question Number " + str(len(questionNumber))
     if questionType == 0:
         modes = getPossibleQuestionModes()
         random_index = random.randrange(0,len(modes))
@@ -185,7 +185,7 @@ def makeRandQuestion(input = 0):
         correct_words = "[past]"
         questionPK = makeAntecedentQuestion(strSentence, questionTxt, possWords, correct_words, redact = "")
     elif questionType == 18:
-        strSentence= "After the plan was crafted, Erica will be warm."
+        strSentence= "After the unfortunate plan was crafted, Erica will be warm."
         possWords = ["present", "future", "past"]
         questionTxt = "What is the tense of the main verb."
         correct_words = "[future]"
@@ -255,7 +255,49 @@ def makeRandQuestion(input = 0):
         possWords = ["simple", "perfect", "progressive", "perfect progressive"]
         questionTxt = "Identify the aspect of the main verb."
         correct_words = "[perfect]"
-        questionPK = makeAntecedentQuestion(strSentence, questionTxt, possWords, correct_words, redact = "")     
+        questionPK = makeAntecedentQuestion(strSentence, questionTxt, possWords, correct_words, redact = "")
+    elif questionType == 30:
+        strSentence =  "The bland understatement has connected the colorful dots inside the house."
+        possWords = ["The", "understatement", "connected", "the", "dots", "inside", "the", "house"]
+        questionTxt = "Identify all the nouns."
+        correct_words = "[understatement, dots, house]"
+        questionPK = makeAntecedentQuestion(strSentence, questionTxt, possWords, correct_words, redact = "")   
+    elif questionType == 31:
+        strSentence =  "Dan will be happier than Jenny."
+        possWords = ["positive", "comparative", "superlative"]
+        questionTxt = "What is the degree of the adjective in the above sentence."
+        correct_words = "[comparative]"
+        questionPK = makeAntecedentQuestion(strSentence, questionTxt, possWords, correct_words, redact = "")
+    elif questionType == 32:
+        strSentence =  "The blue chair will try to be faster than Jenny."
+        possWords = ["fast", "faster", "fastest"]
+        questionTxt = "Fill in the blank."
+        correct_words = "[faster]"
+        questionPK = makeAntecedentQuestion(strSentence, questionTxt, possWords, correct_words, redact = "faster")
+    elif questionType == 33:
+        strSentence =  "The lowest rose will signify death."
+        possWords = ["positive", "comparative", "superlative"]
+        questionTxt = "What is the degree of adjective in the above sentence."
+        correct_words = "[superlative]"
+        questionPK = makeAntecedentQuestion(strSentence, questionTxt, possWords, correct_words, redact = "")
+    elif questionType == 34:
+        strSentence =  "The bright leaf is about to be floating in the school."
+        possWords = ["positive", "comparative", "superlative"]
+        questionTxt = "What is the degree of the adjective in the above sentence."
+        correct_words = "[positive]"
+        questionPK = makeAntecedentQuestion(strSentence, questionTxt, possWords, correct_words, redact = "")
+    elif questionType == 35:
+        strSentence =  "The hairy dog has been barking."
+        possWords = ["hairy", "hairier", "hairiest"]
+        questionTxt = "Fill in the blank."
+        correct_words = "[hairy, hairiest]"
+        questionPK = makeAntecedentQuestion(strSentence, questionTxt, possWords, correct_words, redact = "hairy")
+    elif questionType == 36:
+        strSentence =  "Chase will be hanging the velvet cloak and the coat."
+        possWords = ["Chase", "will", "be", "hanging", "the", "velvet", "cloak", "and", "the", "coat"]
+        questionTxt = "Identify all the nouns."
+        correct_words = "[Chase, cloak, coat]"
+        questionPK = makeAntecedentQuestion(strSentence, questionTxt, possWords, correct_words, redact = "")
     '''
     elif questionType == 2:
         questionPK = makeQuestionHightlight(sentence)
