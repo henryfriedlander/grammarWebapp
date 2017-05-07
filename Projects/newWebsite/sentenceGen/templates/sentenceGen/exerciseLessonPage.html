@@ -7,4 +7,5 @@
 {% endblock stylesheets %}
 {% block main %}
     {{ lesson }}
+    <a href="{% url 'exercise' exerciseID=exerciseID %}">Try out some questions</a>
 {% endblock main %}

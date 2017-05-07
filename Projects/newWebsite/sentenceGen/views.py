@@ -218,7 +218,7 @@ def displayExercises(request):
     return render(request, 'sentenceGen/exercisesListPage.html', {'exercises': getExercises()})
 
 def displayLesson(request, exerciseID):
-    return render(request, 'sentenceGen/exerciseLessonPage.html', {'lesson': ExerciseFactory().getExercise(exerciseID).getLesson()})
+    return render(request, 'sentenceGen/exerciseLessonPage.html', {'lesson': ExerciseFactory().getExercise(exerciseID).getLesson(), 'exerciseID' : exerciseID})
 
 def displayExercise(request, exerciseID):
     question_id = ExerciseFactory().getExercise(exerciseID).getQuestion()
