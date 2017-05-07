@@ -10,6 +10,12 @@
 <li><a href="{% url 'lightningRound' %}">Lightning Round</a></li>
 {% endif %}
 
+{% if active == 'exercises' %}
+<li class="active" id="exercises"><a href="{% url 'exercises' %}">Exercises</a></li>
+{% else %}
+<li><a href="{% url 'exercises' %}">Exercises</a></li>
+{% endif %}
+
 {% if active == 'quiz' %}
 <li class="active" id="quiz"><a href="{% url 'quiz' %}">Quiz Mode</a></li>
 {% else %}
