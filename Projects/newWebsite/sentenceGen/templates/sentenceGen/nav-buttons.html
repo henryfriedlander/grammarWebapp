@@ -10,12 +10,6 @@
 <li><a href="{% url 'lightningRound' %}">Lightning Round</a></li>
 {% endif %}
 
-{% if active == 'exercises' %}
-<li class="active" id="exercises"><a href="{% url 'exercises' %}">Exercises</a></li>
-{% else %}
-<li><a href="{% url 'exercises' %}">Exercises</a></li>
-{% endif %}
-
 {% if active == 'quiz' %}
 <li class="active" id="quiz"><a href="{% url 'quiz' %}">Quiz Mode</a></li>
 {% else %}
@@ -26,10 +20,4 @@
 <li class="active" id="about"><a href="{% url 'about' %}">About</a></li>
 {% else %}
 <li><a href="{% url 'about' %}">About</a></li>
-{% endif %}
-
-{% if active == 'teacher' %}
-<li class="active" id="teacherLogin"><a href="{% url 'teacherLogin' %}">Teacher Login</a></li>
-{% else %}
-<li><a href="{% url 'teacherLogin' %}">Teacher Login</a></li>
 {% endif %}
