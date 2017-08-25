@@ -1,0 +1,25 @@
+the hardest classes were journalism, psychology, and greek.-itrAllWords-Identify all words that need to be capitalized.-the,greek-
+mary of scottland took american history and russian.-itrAllWords-Identify all verbs.-mary,scottland,american,russian-
+i called florence nightengale the lady of the lamp.-itrAllWords-Identify all verbs.-i,florence,nightengale,lady,lamp-
+i love the movie sharknado.-itrAllWords-Identify all verbs.-i,sharknado-
+national geographic is my favorite magazine.-itrAllWords-Identify all verbs.-national,geographic,magazine-
+have you ever heard the song "imperial march" by john williams?-itrAllWords-Identify all verbs.-imperial,march,john,williams-
+pete jackson, jr. m.d., is my favorite pediatrician.-itrAllWords-Identify all verbs.-pete,jackson,jr.,m.d.-
+the prague symphony orchestra played beethoven's ninth symphony on monday.-itrAllWords-Identify all verbs.-prague,symphony,orchestra,beethoven's,ninth,symphony,monday-
+mother and father embarked on a trip to see the parthenon.-itrAllWords-Identify all verbs.-mother,father,parthenon-
+the boy had so much fun at the birthday party.-itrAllWords-Identify all verbs.-the-
+harvard university is where lots of smart people go to work.-itrAllWords-Identify all verbs.-harvard,university-
+my favorite part of the play in boston was when john doe slayed the dragon.-itrAllWords-Identify all verbs.-my,boston,john,doe-
+i love cold millie's ice cream.-itrAllWords-Identify all verbs.-i,millie's-
+teacher john's workbook was a optimistic resource for the students.-itrAllWords-Identify all verbs.-teacher,john's-
+the wife heather was wretched in hoping for salvation.-itrAllWords-Identify all verbs.-the,heather-
+daphne was prideful.-itrAllWords-Identify all verbs.-daphne-
+the prejudiced man will be sent to angola.-itrAllWords-Identify all verbs.-the,angola-
+the blizzard bit at the david and elizabeth with ice.-itrAllWords-Identify all verbs.-the,david,elizabeth-
+my ripest orange tasted good.-itrAllWords-Identify all verbs.-my-
+my daughter works at the store in boston.-itrAllWords-Identify all verbs.-my,boston-
+although rhode island is a state, the land is green.-itrAllWords-Identify all verbs.-although,rhode,island-
+jeremy meyers will hit a high home run.-itrAllWords-Identify all verbs.-jeremy,meyers-
+honesty gives elation to angels.-itrAllWords-Identify all verbs.-honesty-
+the bannana flew to the city of rhinos.-itrAllWords-Identify all verbs.-the-
+anthony traveled to rome spain and paris.-itrAllWords-Identify all verbs.-anthony,rome,spain,paris-

@@ -1,3 +1,4 @@
 {% for exercise in exercises %}
  <a href="{% url 'lesson' exerciseID=exercise.exerciseID %}">{{ exercise.name }}</a>
+ <br></br>
 {% endfor %}

@@ -1,5 +1,5 @@
 import abc
-from QuestionHelper import makeWhomQuestion
+from QuestionHelper import *
 
 class Exercise(object):
 	def __init__(self, name, exerciseID):
@@ -28,3 +28,13 @@ class WhoOrWhomExercise(Exercise):
 	def getLesson(self):
 		#READ Lesson from some file
 		return "WHO OR WHOM EXERCISE LESSON"
+
+class PronounCaseQuestion(Exercise):
+	def __init__(self):
+		super(PronounCaseQuestion, self).__init__("Pronoun Case?", 1)
+	
+	def getQuestion(self):
+		return makePronounCaseQuestion()
+	def getLesson(self):
+		#READ Lesson from some file
+		return "Pronoun Exercise EXERCISE LESSON"

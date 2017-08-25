@@ -1,7 +1,7 @@
 
     {% if correct == 'true' %} 
     <h1>Correct!</h1>
-    <a type="button" class="btn btn-success" href="{% url 'exercise/{{exerciseID}}/' %}">Next Question</a>
+    <a type="button" class="btn btn-success" href="{% url 'exercise' exerciseID=exerciseID %}">Next Question</a>
     <p>
     {% else %}
     <h1>Incorrect</h1>

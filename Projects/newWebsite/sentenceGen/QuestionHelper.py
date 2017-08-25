@@ -74,7 +74,7 @@ def makeRandQuestion(input = 0):
         questionType = 0
     print "questionType " + str(questionType)
     #questionType = 2# random.randrange(0,2)
-
+    questionType=1
     if questionType == 0:
         modes = getPossibleQuestionModes()
         random_index = random.randrange(0,len(modes))
@@ -82,11 +82,7 @@ def makeRandQuestion(input = 0):
         mode = random_tuple[1]
         questionPK = makeQuestionPOSID(sentence, mode)
     elif questionType == 1:
-        strSentence="Lou Ellen and I bought toilet paper."
-        possWords = ["I","me"]
-        questionTxt = "Fill in the blank."
-        correct_words = "[I]"
-        questionPK = makeAntecedentQuestion(strSentence, questionTxt, possWords, correct_words, redact = "I")
+        questionPK = makePronounCaseQuestion()
     elif questionType == 2:
         strSentence="With whom are you going through the praire?"
         possWords = ["who","whom"]
@@ -375,26 +371,10 @@ def makeWhomQuestion():
     return q.pk
 
 def makePronounCaseQuestion():
-    q = Question(sentence = joinSentenceRedact(\
-        "Lou Ellen and I bought toilet paper.", "I"), wordPKs = "")
-    q.save()
-    updatePKs(getPKsAnswer(["I","me","myself"], q, "pronoun"), q)
-    q.text = "Fill in the blank."
+    fileName = 'PronounCaseDB.txt'
+    readDB(fileName)
+    return setPKInfo(fileName)
 
-    q.correct_words = "[I]"
-    q.save()
-    return q.pk
-
-def makePronounCaseQuestion():
-    q = Question(sentence = joinSentenceRedact(\
-        "Lou Ellen and I bought toilet paper.", "I"), wordPKs = "")
-    q.save()
-    updatePKs(getPKsAnswer(["I","me","myself"], q, "pronoun"), q)
-    q.text = "Fill in the blank."
-
-    q.correct_words = "[I]"
-    q.save()
-    return q.pk
 
 def getPKsAnswer(possWords, q, POSText):
     index = 0
@@ -446,3 +426,24 @@ def getModeWords(sentence, mode):
             modeWords+=[word]
         index += 1
     return modeWords
+def setPKInfo(fileName):
+    strSentence, possWords, questionTxt, correct_words, redactWord = readDB(fileName)
+    return makeAntecedentQuestion(strSentence, questionTxt, possWords, correct_words, redact = redactWord)
+
+def getRandWord(f):
+    return random.choice(f.readlines()).rstrip()
+
+def convertArrayToString(arr):
+    fomattedStr = '['
+    for s in arr:
+        fomattedStr += s +','
+    fomattedStr = fomattedStr[:-1]+']'
+    return fomattedStr
+
+
+def readDB(fileName):
+    prefix = "/Users/henry/Projects/grammarWebapp/Projects/newWebsite/sentenceGen/grammar/"
+    strRandWords = getRandWord(open(prefix+'POSLists/'+fileName)).split('-')
+    strRandWords[1] = strRandWords[1].split(',') #splits poswords
+    strRandWords[3] = convertArrayToString(strRandWords[3].split(','))
+    return strRandWords

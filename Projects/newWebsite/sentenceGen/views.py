@@ -203,7 +203,6 @@ def contains(arr, e):
     print "ARR "+str(arr)
     print "E "+str(e)
     for k in arr:
-        print k
         if str(k).strip() == str(e).strip():
             return 'true'
     return 'false'
@@ -211,6 +210,7 @@ def contains(arr, e):
 def getExercises():
     exercises = [
         WhoOrWhomExercise(),
+        PronounCaseQuestion(),
     ]
     return exercises
 
@@ -230,7 +230,6 @@ def scoreGeneralQuestion(request, question_id):
     question = get_object_or_404(Question, pk = question_id)
     sentence = question.sentence
     words = question.word_set.all()
-    correct = 'true'
 
 
     print ("Correct Words: " + str(question.correct_words))
@@ -249,6 +248,11 @@ def scoreGeneralQuestion(request, question_id):
     chosen_words = str(chosen_words)
     print "CHOSEN WORDS "+str(chosen_words)
     print "SPLITTED "+str(chosen_words.split(", ")[:-1])
+    print "CORRECT WORDS "+str(str(question.correct_words)[1:-1].split(","))
+    if len(str(question.correct_words)[1:-1].split(","))==len(chosen_words.split(", ")[:-1]):
+        correct='true'
+    else:
+        correct='false'
     for word in chosen_words.split(", ")[:-1]:
         print "Word in scoreQuestion " + word
         if correct == 'true':
