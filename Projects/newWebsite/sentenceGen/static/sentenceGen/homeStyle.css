@@ -1,13 +1,13 @@
 
 h1 {
   font-size: 80px;
-    color: #ffffff;
+    color: #fff000;
     padding-top: 10px;
     display: inline;
 }
 
 h3 {
-    color: #ffffff;
+    color: #37e82e;
     padding-top: 12px;
     display: inline;
 }
@@ -18,7 +18,7 @@ p {
 }
 
 #front-page-img { 
-  background: url(https://static.pexels.com/photos/2318/vintage-technology-keyboard-old.jpg) no-repeat center center fixed; 
+  background: url(../pictures/bg_1.png) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

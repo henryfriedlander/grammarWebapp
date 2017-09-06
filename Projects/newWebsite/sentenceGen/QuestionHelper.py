@@ -6,7 +6,9 @@ from models import Quiz, Question, Word, Teacher
 
 from grammar import getSentence
 
-questionNumber = [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+questionNumber = [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True,
+ True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+used_indices = set([])
 
 def joinSentence(sentence):
     realSentence = getSentence.getStrSent(sentence)
@@ -372,9 +374,30 @@ def makeWhomQuestion():
 
 def makePronounCaseQuestion():
     fileName = 'PronounCaseDB.txt'
-    readDB(fileName)
-    return setPKInfo(fileName)
+    return makeGenericQuestion(fileName)
 
+def makeVerbIDQuestion():
+    fileName = 'VerbIdentificationDB.txt'
+    return makeGenericQuestion(fileName)
+
+def makeCapitalizationQuestion():
+    fileName = 'CapitalizationDB.txt'
+    return makeGenericQuestion(fileName)
+
+def makeNounIDQuestion():
+    fileName = 'NounIdentificationDB.txt'
+    return makeGenericQuestion(fileName)
+
+def makeCommaListQuestion():
+    fileName = 'CommaListDB.txt'
+    return makeGenericQuestion(fileName)
+
+def makeCommaSeperatingCoordinatingAdjectiveQuestion():
+    fileName = 'CommaSepCoordinatingAdjDB.txt'
+    return makeGenericQuestion(fileName)
+
+def makeGenericQuestion(fileName):
+    return setPKInfo(fileName)
 
 def getPKsAnswer(possWords, q, POSText):
     index = 0
@@ -431,7 +454,16 @@ def setPKInfo(fileName):
     return makeAntecedentQuestion(strSentence, questionTxt, possWords, correct_words, redact = redactWord)
 
 def getRandWord(f):
-    return random.choice(f.readlines()).rstrip()
+    # get a random number and check if that number is in the array
+    # create a random list of the possible questions to check whether it has been done.
+    lines = f.readlines()
+    pos_indices = set(lines) - used_indices
+    print pos_indices
+    print len(pos_indices)
+    question = random.choice(list(pos_indices))
+    used_indices.add(question)
+    print question.rstrip()
+    return question.rstrip()
 
 def convertArrayToString(arr):
     fomattedStr = '['
@@ -443,7 +475,10 @@ def convertArrayToString(arr):
 
 def readDB(fileName):
     prefix = "/Users/henry/Projects/grammarWebapp/Projects/newWebsite/sentenceGen/grammar/"
-    strRandWords = getRandWord(open(prefix+'POSLists/'+fileName)).split('-')
-    strRandWords[1] = strRandWords[1].split(',') #splits poswords
-    strRandWords[3] = convertArrayToString(strRandWords[3].split(','))
+    strRandWords = getRandWord(open(prefix+'POSDB/'+fileName)).split('-')
+    if strRandWords[1]=='itrAllWords':
+        strRandWords[1]=strRandWords[0][:-1].split(' ') #GET RID OF ALL COMMAS FROM SENTENCE
+    else:
+        strRandWords[1] = strRandWords[1].split(',') #splits poswords
+    strRandWords[3] = strRandWords[3].split(',') #splits poswords
     return strRandWords

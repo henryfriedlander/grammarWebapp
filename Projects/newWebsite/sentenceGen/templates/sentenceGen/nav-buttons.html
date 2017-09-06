@@ -1,21 +1,3 @@
-{% if active == 'generate' %}
-<li class="active" id="generate"><a href="{% url 'generate' %}">Generate a Sentence!</a></li>
-{% else %}
-<li><a href="{% url 'generate' %}">Generate a Sentence!</a></li>
-{% endif %}
-
-{% if active == 'lightningRound' %}
-<li class="active" id="lightningRound"><a href="{% url 'lightningRound' %}">Lightning Round</a></li>
-{% else %}
-<li><a href="{% url 'lightningRound' %}">Lightning Round</a></li>
-{% endif %}
-
-{% if active == 'quiz' %}
-<li class="active" id="quiz"><a href="{% url 'quiz' %}">Quiz Mode</a></li>
-{% else %}
-<li><a href="{% url 'quiz' %}">Quiz Mode</a></li>
-{% endif %}
-
 {% if active == 'about' %}
 <li class="active" id="about"><a href="{% url 'about' %}">About</a></li>
 {% else %}

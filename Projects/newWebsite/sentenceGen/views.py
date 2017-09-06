@@ -4,7 +4,7 @@ import random
 from . import forms
 from models import Quiz, Question, Word, Teacher
 from django.shortcuts import render_to_response
-
+import re
 from grammar import getSentence
 
 from QuestionHelper import *
@@ -12,7 +12,7 @@ from Exercise import *
 from ExerciseFactory import *
 
 def home(request):
-    return render(request, 'sentenceGen/home.html')
+    return render(request, 'sentenceGen/home.html', {'exercises': getExercises()})
 
 def newsentence():
     return getSentence.getSentence()
@@ -203,7 +203,7 @@ def contains(arr, e):
     print "ARR "+str(arr)
     print "E "+str(e)
     for k in arr:
-        if str(k).strip() == str(e).strip():
+        if " ".join(re.findall("[a-zA-Z]+", str(k).strip())) == " ".join(re.findall("[a-zA-Z]+", str(e).strip())):
             return 'true'
     return 'false'
 
@@ -211,6 +211,11 @@ def getExercises():
     exercises = [
         WhoOrWhomExercise(),
         PronounCaseQuestion(),
+        VerbIDExercise(),
+        CapitalizationExercise(),
+        CommaListExercise(),
+        NounIDExercise(),
+        CommaSeperatingCoordinatingAdjectiveExercise(),
     ]
     return exercises
 
@@ -220,10 +225,15 @@ def displayExercises(request):
 def displayLesson(request, exerciseID):
     return render(request, 'sentenceGen/exerciseLessonPage.html', {'lesson': ExerciseFactory().getExercise(exerciseID).getLesson(), 'exerciseID' : exerciseID})
 
-def displayExercise(request, exerciseID):
+def displayExercise(request, exerciseID, question_counter):
     question_id = ExerciseFactory().getExercise(exerciseID).getQuestion()
     question = get_object_or_404(Question, pk = question_id)
-    return render(request, 'sentenceGen/exerciseQuestion.html', {'exerciseID': exerciseID, 'sentence': question.sentence, 'question':question})
+    question_counter_int= int(question_counter) + 1
+    print "QUESTION_COUNTER " + str(question_counter_int)
+    if question_counter_int >= 10:
+        return render(request, 'sentenceGen/exerciseFinish.html', {})
+    else:
+        return render(request, 'sentenceGen/exerciseQuestion.html', {'exerciseID': exerciseID, 'sentence': question.sentence, 'question':question, 'question_counter':question_counter_int})
 
 def scoreGeneralQuestion(request, question_id):
     boldWord = "" # bolded/redacted word for question types
@@ -246,20 +256,27 @@ def scoreGeneralQuestion(request, question_id):
         except:
             print "except"
     chosen_words = str(chosen_words)
-    print "CHOSEN WORDS "+str(chosen_words)
-    print "SPLITTED "+str(chosen_words.split(", ")[:-1])
-    print "CORRECT WORDS "+str(str(question.correct_words)[1:-1].split(","))
+    print "CHOSEN WORDS "+str(chosen_words=='')
+    print "CORRECT WORDS "+str(question.correct_words=='["''""]')
+    print "SPLITTED "+str(chosen_words.split(", ")[:-1] == [])
+    print "CORRECT WORDS "+str(str(question.correct_words)[1:-1].split(",")[0])
     if len(str(question.correct_words)[1:-1].split(","))==len(chosen_words.split(", ")[:-1]):
         correct='true'
     else:
         correct='false'
+
+    print correct
     for word in chosen_words.split(", ")[:-1]:
-        print "Word in scoreQuestion " + word
+        #print "Word in scoreQuestion " + word
         if correct == 'true':
             correct = contains(str(question.correct_words)[1:-1].split(","), word)
+            print correct
 
     if chosen_words == "":
-        correct = 'false'
+        if str(question.correct_words)[1:-1].split(",")[0] == "'NO_CORRECT_WORDS'":
+            correct = 'true'
+        else:
+            correct = 'false'
     else:
         chosen_words = chosen_words.rstrip(', ')
 
@@ -272,7 +289,8 @@ def scoreQuestion(request, question_id, mode):
     return render_to_response('sentenceGen/lightningResponse.html', scoreGeneralQuestion(request, question_id), content_type="html")
     #return render(request, 'sentenceGen/lightningAnswer.html', {'sentence': question.sentence, 'mode': mode, 'question':question, 'correct_words': str(question.correct_words), 'chosen_words':chosen_words, 'correct':correct, 'bolded_word':boldWord})
 
-def scoreExerciseQuestion(request, question_id, exerciseID):
+def scoreExerciseQuestion(request, question_id, exerciseID,question_counter):
     context = scoreGeneralQuestion(request, question_id)
     context['exerciseID'] = exerciseID
+    context['question_counter'] = question_counter
     return render_to_response('sentenceGen/exerciseResponse.html', context, content_type="html")

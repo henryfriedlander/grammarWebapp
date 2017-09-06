@@ -1,0 +1,10 @@
+The hardest classes were journalism psychology and Greek.-itrAllWords-Identify the words that need a comma after them.-journalism,psychology-
+Mary took American history math and Russian.-itrAllWords-Identify the words that need a comma after them.-history,math-
+I love the movies "Forest Gump" "The Lion King" and "The Godfather."-itrAllWords-Identify the words that need a comma after them.-Gump,King-
+At the park we can jog and swim and play for the rest of the afternoon.-itrAllWords-Identify the words that need a comma after them.-NO_CORRECT_WORDS-
+I like to eat spaghetti and meatballs steak kale and oranges.-itrAllWords-Identify the words that need a comma after them.-meatballs,steak,kale-
+Jonathon jumped up kicked and fell backward.-itrAllWords-Identify the words that need a comma after them.-up,kicked-
+The crowd was large bad and happy.-itrAllWords-Identify the words that need a comma after them.-large,bad-
+Although the group was big, we went to the restaurant and the ball.-itrAllWords-Identify the words that need a comma after them.-NO_CORRECT_WORDS-
+Alicia was full happy and comfortable.-itrAllWords-Identify the words that need a comma after them.-full,happy-
+Anthony traveled to Rome Spain and Paris.-itrAllWords-Identify the words that need a comma after them.-Rome,Spain-

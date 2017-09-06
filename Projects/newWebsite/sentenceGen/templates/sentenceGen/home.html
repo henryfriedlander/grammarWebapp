@@ -12,14 +12,21 @@
 <div>
         <div class="row">
             <div class="col-md-offset-2 col-md-8 centered-text">
-        <div id="header">
-            <p><h1>Sentence Generator</h1></p>
+            <div id="header">
+                <p><h1>Grammatica Academy</h1></p>
 
-        <div id="subtitle">
-            <p><h3> by Henry Friedlander</h3></p>
+                <div id="subtitle">
+                    <p><h3> by Henry Friedlander</h3></p>
+                </div>
+            </div>
         </div>
+        <div class="container">
+            <div class="btn-group btn-matrix">
+                {% for exercise in exercises %}
+                    <input type="button" class="btn btn-default" onclick="location.href='{% url 'exercise' exerciseID=exercise.exerciseID question_counter=0 %}'" value="{{ exercise.name }}" />
+            {% endfor %}
             </div>
         </div>
     </div>  
-</div>  
+</div>
 {% endblock main %}

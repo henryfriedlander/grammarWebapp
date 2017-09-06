@@ -18,6 +18,6 @@ urlpatterns = [
     url(r'^scoreQuestion/(?P<question_id>\d+)/(?P<mode>\w+)/', views.scoreQuestion, name='scoreQuestion'),
     url(r'^exercises/', views.displayExercises, name='exercises'),
     url(r'^lesson/(?P<exerciseID>\d+)/', views.displayLesson, name='lesson'),
-    url(r'^exercise/(?P<exerciseID>\d+)/', views.displayExercise, name='exercise'),
-    url(r'^scoreExerciseQuestion/(?P<question_id>\d+)/(?P<exerciseID>\d+)/', views.scoreExerciseQuestion, name='scoreExerciseQuestion'),
+    url(r'^exercise/(?P<exerciseID>\d+)/(?P<question_counter>\d+)/', views.displayExercise, name='exercise'),
+    url(r'^scoreExerciseQuestion/(?P<question_id>\d+)/(?P<exerciseID>\d+)/(?P<question_counter>\d+)/', views.scoreExerciseQuestion, name='scoreExerciseQuestion'),
 ]

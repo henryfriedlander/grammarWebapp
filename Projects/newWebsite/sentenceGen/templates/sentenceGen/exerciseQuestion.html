@@ -9,7 +9,7 @@
     <h1>Lightning Round</h1>
         <h4 id="sentence"><span style="font-weight:bold"> {{ sentence }} </span></h4>
         <h4> {{ question.text }} </h4>
-        <form id="lightning_score_sentence" action="/sentence/scoreExerciseQuestion/{{ question.pk }}/{{ exerciseID }}/" method="post">
+        <form id="lightning_score_sentence" action="/sentence/scoreExerciseQuestion/{{ question.pk }}/{{ exerciseID }}/{{question_counter}}/" method="post">
         {% csrf_token %}
         {% for word in question.word_set.all %}
             <input type="checkbox" name="word{{ forloop.counter}}" id="word{{ forloop.counter }}" value = "{{ word.id }}" />

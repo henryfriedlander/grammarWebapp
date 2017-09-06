@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Lightning{% endblock %}
+
+{% block stylesheets %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sentenceGen/quizStyle.css' %}" />
+{% endblock stylesheets %}
+{% block main %}
+<div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8 centered-text">
+	        <div id="header">
+	            <p><h1>You finished the exercise. Click to go home and try more exercises!</h1></p>
+	        </div>
+	        <a type="button" class="btn btn-success" href="/sentence">Finish Exercise</a>
+	    </div>
+    </div>
+</div>
+{% endblock main %}

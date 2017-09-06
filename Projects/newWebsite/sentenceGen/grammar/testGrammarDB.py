@@ -5,7 +5,7 @@ def getRandWord(f):
 
 def readDB(fileName):
 	prefix = "/Users/henry/Projects/grammarWebapp/Projects/newWebsite/sentenceGen/grammar/"
-	strRandWords = getRandWord(open(prefix+'POSLists/'+fileName)).split('-')
+	strRandWords = getRandWord(open(prefix+'POSDB/'+fileName)).split('-')
 	if strRandWords[1]=='itrAllWords':
 		strRandWords[1]=strRandWords[0][:-1].split(' ') #GET RID OF ALL COMMAS FROM SENTENCE
 	else:

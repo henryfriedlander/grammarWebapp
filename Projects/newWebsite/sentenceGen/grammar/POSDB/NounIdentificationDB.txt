@@ -16,5 +16,5 @@ Jeremy Meyers hit a high home run.-itrAllWords-Identify all nouns.-Jeremy,Meyers
 Honesty gives elation to angels.-itrAllWords-Identify all nouns.-Honesty,elation,angels-
 The bannana flew to the city of rhinos.-itrAllWords-Identify all nouns.-bannana,city,rhinos-
 The workbook was a optimistic resource for the students.-itrAllWords-Identify all nouns.-workbook,resource,students-
-The wife was wretched in hoping for salvation.-itrAllWords-Identify all nouns.-wife-
+The wife was wretched in hoping for salvation.-itrAllWords-Identify all nouns.-wife,salvation-
 Daphne was prideful.-itrAllWords-Identify all nouns.-Dahpne-
