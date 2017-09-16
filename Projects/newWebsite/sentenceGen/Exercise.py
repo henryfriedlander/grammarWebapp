@@ -24,7 +24,7 @@ class WhoOrWhomExercise(Exercise):
 		super(WhoOrWhomExercise, self).__init__("Who or Whom?", 0)
 	
 	def getQuestion(self):
-		return makeWhomQuestion()
+		return makeWhoOrWhomQuestion()
 	def getLesson(self):
 		#READ Lesson from some file
 		return "WHO OR WHOM EXERCISE LESSON"
@@ -85,6 +85,16 @@ class CommaSeperatingCoordinatingAdjectiveExercise(Exercise):
 	
 	def getQuestion(self):
 		return makeCommaSeperatingCoordinatingAdjectiveQuestion()
+	def getLesson(self):
+		#READ Lesson from some file
+		return "makeCommaListQuestion ID Exercise EXERCISE LESSON"
+
+class AdverbIDExercise(Exercise):
+	def __init__(self):
+		super(AdverbIDExercise, self).__init__("Adverb ID", 7)
+	
+	def getQuestion(self):
+		return makeAdverbIDQuestion()
 	def getLesson(self):
 		#READ Lesson from some file
 		return "makeCommaListQuestion ID Exercise EXERCISE LESSON"

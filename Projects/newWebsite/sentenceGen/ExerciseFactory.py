@@ -17,6 +17,8 @@ class ExerciseFactory(object):
 			return CommaListExercise()
 		if streID == '6':
 			return CommaSeperatingCoordinatingAdjectiveExercise()
+		if streID == '7':
+			return AdverbIDExercise()
 		else:
 			print "bad exerciseID"
 			return "exerciseID out of range"

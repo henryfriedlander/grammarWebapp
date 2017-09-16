@@ -1,0 +1,13 @@
+Mr. Martin was certainly a great drummer.-itrAllWords-Identify all adverbs.-certainly-
+The attack was an extremely strong charge.-itrAllWords-Identify all adverbs.-extremely-
+She definitely always talks to Johnny.-itrAllWords-Identify all adverbs.-extremely-
+My shirt fits comfortably.-itrAllWords-Identify all adverbs.-comfortably-
+He was acting very womanly.-itrAllWords-Identify all adverbs.-NO_CORRECT_WORDS-
+She will probably run again.-itrAllWords-Identify all adverbs.-probably,again-
+John ran through the gates rapidly.-itrAllWords-Identify all adverbs.-rapidly-
+The plane crash was terribly sad.-itrAllWords-Identify all adverbs.-terribly-
+The marbles scattered everywhere after Johnny clumsily threw them up in the air.-itrAllWords-Identify all adverbs.-everywhere,clumsily-
+He carefully selected Andersen.-itrAllWords-Identify all adverbs.-carefully-
+Henry was seldom completely correct.-itrAllWords-Identify all adverbs.-seldom,completely-
+Hank and Peter argued bitterly.-itrAllWords-Identify all adverbs.-bitterly-
+Eliza and Clayton ran quickly.-itrAllWords-Identify all adverbs.-quickly-

@@ -3,7 +3,7 @@ Jonathon told the police officer that he was understanding.-itrAllWords-Identify
 The eclipse was happy that the sheep was happy.-itrAllWords-Identify all nouns.-eclipse,sheep-
 The man was oversized compared to others.-itrAllWords-Identify all nouns.-man-
 Jenny purchased an orange from the store across the lane.-itrAllWords-Identify all nouns.-Jenny,orange,store,street-
-People can be happy.-itrAllWords-Identify all nouns.-people-
+People can be happy.-itrAllWords-Identify all nouns.-People-
 The organization create a deep blue flower.-itrAllWords-Identify all nouns.-organization,flower-
 The children fluttered miserably to church.-itrAllWords-Identify all nouns.-children,church-
 Emily hated the chaos of unhappiness.-itrAllWords-Identify all nouns.-Emily,chaos,unhappiness-

@@ -216,6 +216,7 @@ def getExercises():
         CommaListExercise(),
         NounIDExercise(),
         CommaSeperatingCoordinatingAdjectiveExercise(),
+        AdverbIDExercise(),
     ]
     return exercises
 
@@ -231,6 +232,7 @@ def displayExercise(request, exerciseID, question_counter):
     question_counter_int= int(question_counter) + 1
     print "QUESTION_COUNTER " + str(question_counter_int)
     if question_counter_int >= 10:
+        used_indices.clear()
         return render(request, 'sentenceGen/exerciseFinish.html', {})
     else:
         return render(request, 'sentenceGen/exerciseQuestion.html', {'exerciseID': exerciseID, 'sentence': question.sentence, 'question':question, 'question_counter':question_counter_int})
