@@ -1,0 +1,9 @@
+church
+store
+supermarket
+synagogue
+school
+house
+apartment
+airport
+truck

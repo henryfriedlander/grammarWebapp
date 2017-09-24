@@ -7,6 +7,7 @@ from models import Quiz, Question, Word, Teacher
 from grammar import getSentence
 
 used_indices = set([])
+DBprefixes = '/Users/henry/Projects/grammarWebapp/Projects/newWebsite/sentenceGen/grammar/'
 
 def joinSentence(sentence):
     realSentence = getSentence.getStrSent(sentence)
@@ -157,7 +158,7 @@ def makeWhomQuestion():
     return q.pk
 
 def makeWhoOrWhomQuestion():
-    fileName = 'RelativePronounCaseDB.txt'
+    fileName = 'replacementTestDB.txt'
     return makeGenericQuestion(fileName)   
 
 def makePronounCaseQuestion():
@@ -264,13 +265,31 @@ def convertArrayToString(arr):
     fomattedStr = fomattedStr[:-1]+']'
     return fomattedStr
 
-
 def readDB(fileName):
-    prefix = "/Users/henry/Projects/grammarWebapp/Projects/newWebsite/sentenceGen/grammar/"
-    strRandWords = getRandWord(open(prefix+'POSDB/'+fileName)).split('-')
+    strRandWords = filterSentence(getRandWord(open(DBprefixes+'POSDB/'+fileName))).split('-')
     if strRandWords[1]=='itrAllWords':
         strRandWords[1]=strRandWords[0][:-1].split(' ') #GET RID OF ALL COMMAS FROM SENTENCE
     else:
         strRandWords[1] = strRandWords[1].split(',') #splits poswords
     strRandWords[3] = strRandWords[3].split(',') #splits poswords
     return strRandWords
+
+def filterSentence(sentence):
+
+    sentence = filterPlaceholders(sentence,'Occupations.txt')
+
+    return sentence
+
+def filterPlaceholders(sentence, fileName):
+    count = 1
+    sentenceWord = fileName[:-4]
+    while sentenceWord in sentence:
+        numericalSentenceWord = sentenceWord+str(count)
+        randWord = getRandWord(open(DBprefixes+'POSDB/'+fileName))
+        firstWord = (sentence.split(' ').index(numericalSentenceWord) == 0)
+        hasThe = (randWord[:4] == 'the ')
+        sentence = sentence.replace(numericalSentenceWord, randWord.capitalize() if firstWord else randWord,1)
+        sentence = sentence.replace(numericalSentenceWord, randWord[4:] if hasThe else randWord)
+        count+=1
+
+    return sentence

@@ -1,20 +1,20 @@
-The instructor intructed the student to look.-itrAllWords-Identify all nouns.-instructor,student-
-Jonathon told the police officer that he was understanding.-itrAllWords-Identify all nouns.-Jonathon,police officer-
-The eclipse was happy that the sheep was happy.-itrAllWords-Identify all nouns.-eclipse,sheep-
-The man was oversized compared to others.-itrAllWords-Identify all nouns.-man-
-Jenny purchased an orange from the store across the lane.-itrAllWords-Identify all nouns.-Jenny,orange,store,street-
-People can be happy.-itrAllWords-Identify all nouns.-People-
-The organization create a deep blue flower.-itrAllWords-Identify all nouns.-organization,flower-
-The children fluttered miserably to church.-itrAllWords-Identify all nouns.-children,church-
-Emily hated the chaos of unhappiness.-itrAllWords-Identify all nouns.-Emily,chaos,unhappiness-
+The Occupations1 intructed Occupations2 to look.-itrAllWords-Identify all nouns.-Occupations1,Occupations2-
+Occupations1 told Occupations2 that it was light.-itrAllWords-Identify all nouns.-Occupations1,Occupations2-
+Occupations1 was happy that Occupations2 was AdjComp1 -itrAllWords-Identify all nouns.-Occupations1,Occupations2-
+Occupations1 was AdjComp1 compared to Occupations2 -itrAllWords-Identify all nouns.-Occupations1,Occupations2-
+Occupations1 purchased an orange from the store.-itrAllWords-Identify all nouns.-Occupations1,orange,store-
+Occupations1 can be AdjComp1.-itrAllWords-Identify all nouns.-Occupations1-
+Entities1 creates a Colors1 Objects1 -itrAllWords-Identify all nouns.-Entities1,Objects1-
+Occupations1 fluttered EmotionAdverbs1 to the Places1 -itrAllWords-Identify all nouns.-Occupations1,Places1-
+Occupations1 hated the chaos of unhappiness.-itrAllWords-Identify all nouns.-Emily,chaos,unhappiness-
 Mr.Terry youthfully lives in Australia.-itrAllWords-Identify all nouns.-Mr.Terry,Australia-
-The blizzard bit at the David and Elizabeth with ice.-itrAllWords-Identify all nouns.-blizzard,David,Elizabeth,ice-
+The blizzard bit at Occupations1 and Occupations1 with ice.-itrAllWords-Identify all nouns.-blizzard,David,Elizabeth,ice-
 My ripest orange tastes good.-itrAllWords-Identify all nouns.-orange-
 My daughter works at the store in Boston.-itrAllWords-Identify all nouns.-daughter,store,Boston-
 Although Rhode Island is a state, the land is green.-itrAllWords-Identify all nouns.-Rhode,Island,state,land-
 Jeremy Meyers hit a high home run.-itrAllWords-Identify all nouns.-Jeremy,Meyers,home,run-
 Honesty gives elation to angels.-itrAllWords-Identify all nouns.-Honesty,elation,angels-
-The bannana flew to the city of rhinos.-itrAllWords-Identify all nouns.-bannana,city,rhinos-
 The workbook was a optimistic resource for the students.-itrAllWords-Identify all nouns.-workbook,resource,students-
-The wife was wretched in hoping for salvation.-itrAllWords-Identify all nouns.-wife,salvation-
-Daphne was prideful.-itrAllWords-Identify all nouns.-Dahpne-
+Occupations1 was wretched in hoping for salvation.-itrAllWords-Identify all nouns.-wife,salvation-
+Occupations1 was AdjComp.-itrAllWords-Identify all nouns.-Occupations1-
+The PositiveAbstractNouns1 of Occupations1 was PositiveAdjectives1 -itrAllWords-Identify all nouns.-PositiveAbstractNouns1,Occupations1-
