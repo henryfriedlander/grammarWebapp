@@ -81,7 +81,7 @@ class CommaListExercise(Exercise):
 
 class CommaSeperatingCoordinatingAdjectiveExercise(Exercise):
 	def __init__(self):
-		super(CommaSeperatingCoordinatingAdjectiveExercise, self).__init__("Comma Seperating Coordinating Adjectives", 6)
+		super(CommaSeperatingCoordinatingAdjectiveExercise, self).__init__("Comma Separating Coordinating Adjectives", 6)
 	
 	def getQuestion(self):
 		return makeCommaSeperatingCoordinatingAdjectiveQuestion()

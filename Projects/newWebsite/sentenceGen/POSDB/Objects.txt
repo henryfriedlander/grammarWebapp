@@ -1,0 +1,14 @@
+flower
+chair
+slide
+tree
+person
+computer
+grill
+car
+house
+wheel
+bench
+bush
+table
+tree

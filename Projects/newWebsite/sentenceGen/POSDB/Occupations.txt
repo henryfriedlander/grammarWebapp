@@ -1,0 +1,42 @@
+the student
+the teacher
+the officer
+the manager
+the doctor
+the dentist
+the nurse
+the grandmother
+the grandfather
+the aunt
+the housekeeper
+the banker
+the accountant
+the programmer
+the barber
+the pilot
+the builder
+the contractor
+the philosopher
+the tailor
+the waiter
+James
+Alicia
+John
+Robert
+Jessica
+Emily
+Peter
+Catherine
+Henry
+Alexander
+Aaron
+Anthony
+Paul
+Mark
+Mary
+Susan
+Nancy
+Ashley
+Eva
+David
+Elizabeth

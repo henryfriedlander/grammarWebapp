@@ -28,6 +28,8 @@ def filterSentence(sentence):
 		'EmotionAdverbs.txt',
 		'PositiveAbstractNouns.txt',
 		'PositiveAdjectives.txt',
+		'CitiesAndCountries.txt',
+		'NegativeAbstractNouns.txt',
 	]
 	for typeOfWord in typesOfWords:
 		sentence = filterPlaceholders(sentence,typeOfWord)

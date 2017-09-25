@@ -3,11 +3,14 @@ from django.http import HttpResponse
 import random
 from . import forms
 from models import Quiz, Question, Word, Teacher
+import os
 
 from grammar import getSentence
 
 used_indices = set([])
-DBprefixes = '/Users/henry/Projects/grammarWebapp/Projects/newWebsite/sentenceGen/grammar/'
+settings_dir = os.path.dirname(__file__)
+PROJECT_ROOT = os.path.abspath(os.path.dirname(settings_dir))
+XMLFILES_FOLDER = os.path.join(PROJECT_ROOT, 'sentenceGen/grammar/POSDB/')
 
 def joinSentence(sentence):
     realSentence = getSentence.getStrSent(sentence)
@@ -266,7 +269,9 @@ def convertArrayToString(arr):
     return fomattedStr
 
 def readDB(fileName):
-    strRandWords = filterSentence(getRandWord(open(DBprefixes+'POSDB/'+fileName))).split('-')
+    strRandWords = filterSentence(getRandWord(open(XMLFILES_FOLDER+fileName))).split('-')
+    if not strRandWords[0][-1] == '.':
+        strRandWords[0] = strRandWords[0][:-1] + '.'
     if strRandWords[1]=='itrAllWords':
         strRandWords[1]=strRandWords[0][:-1].split(' ') #GET RID OF ALL COMMAS FROM SENTENCE
     else:
@@ -275,8 +280,21 @@ def readDB(fileName):
     return strRandWords
 
 def filterSentence(sentence):
-
-    sentence = filterPlaceholders(sentence,'Occupations.txt')
+    typesOfWords = [
+        'Occupations.txt',
+        'AdjComp.txt',
+        'Entities.txt',
+        'Colors.txt',
+        'Objects.txt',
+        'Places.txt',
+        'EmotionAdverbs.txt',
+        'PositiveAbstractNouns.txt',
+        'PositiveAdjectives.txt',
+        'CitiesAndCountries.txt',
+        'NegativeAbstractNouns.txt',
+    ]
+    for typeOfWord in typesOfWords:
+        sentence = filterPlaceholders(sentence,typeOfWord)
 
     return sentence
 
@@ -285,7 +303,7 @@ def filterPlaceholders(sentence, fileName):
     sentenceWord = fileName[:-4]
     while sentenceWord in sentence:
         numericalSentenceWord = sentenceWord+str(count)
-        randWord = getRandWord(open(DBprefixes+'POSDB/'+fileName))
+        randWord = getRandWord(open(XMLFILES_FOLDER+fileName))
         firstWord = (sentence.split(' ').index(numericalSentenceWord) == 0)
         hasThe = (randWord[:4] == 'the ')
         sentence = sentence.replace(numericalSentenceWord, randWord.capitalize() if firstWord else randWord,1)

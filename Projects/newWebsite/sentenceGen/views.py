@@ -209,14 +209,14 @@ def contains(arr, e):
 
 def getExercises():
     exercises = [
+        NounIDExercise(),
+        VerbIDExercise(),
+        AdverbIDExercise(),
+        CapitalizationExercise(),
         WhoOrWhomExercise(),
         PronounCaseQuestion(),
-        VerbIDExercise(),
-        CapitalizationExercise(),
         CommaListExercise(),
-        NounIDExercise(),
         CommaSeperatingCoordinatingAdjectiveExercise(),
-        AdverbIDExercise(),
     ]
     return exercises
 

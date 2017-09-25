@@ -1,0 +1,15 @@
+Stan ridiculed the happy carefree students.-itrAllWords-Identify all verbs.-happy-
+King Louis XIV told the court that he was an understanding happy man.-itrAllWords-Identify all verbs.-understanding-
+John the ape was a clever little boy.-itrAllWords-Identify all verbs.-NO_CORRECT_WORDS-
+Bob wanted the sylish red computer.-itrAllWords-Identify all verbs.-stylish-
+Jenny purchased an ripe orange from the successful store.-itrAllWords-Identify all verbs.-NO_CORRECT_WORDS-
+The dashing smart chimpanzee could not have been happy.-itrAllWords-Identify all verbs.-NO_CORRECT_WORDS-
+The organization did not create a deep blue flower.-itrAllWords-Identify all verbs.-NO_CORRECT_WORDS-
+I feel the sunny warm air.-itrAllWords-Identify all verbs.-sunny-
+We went down the long dirt road.-itrAllWords-Identify all verbs.-NO_CORRECT_WORDS-
+The quiet fat cat ran to the store.-itrAllWords-Identify all verbs.-quiet-
+The happy little programmer ran away.-itrAllWords-Identify all verbs.-happy-
+Elizabeth appeared at the fun suprise party.-itrAllWords-Identify all verbs.-NO_CORRECT_WORDS-
+Eliza went to the mighty fun party.-itrAllWords-Identify all verbs.-NO_CORRECT_WORDS-
+Angela sang the happy merry carol.-itrAllWords-Identify all verbs.-happy-
+The large spoiled kids found the unruly wild beast.-itrAllWords-Identify all verbs.-large,unruly-
